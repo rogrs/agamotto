@@ -1,0 +1,39 @@
+{
+  "generator-jhipster": {
+    "promptValues": {
+      "packageName": "br.com.rogrs",
+      "nativeLanguage": "pt-br"
+    },
+    "jhipsterVersion": "5.7.0",
+    "applicationType": "monolith",
+    "baseName": "agamotto",
+    "packageName": "br.com.rogrs",
+    "packageFolder": "br/com/rogrs",
+    "serverPort": "8080",
+    "authenticationType": "jwt",
+    "cacheProvider": "ehcache",
+    "enableHibernateCache": true,
+    "websocket": false,
+    "databaseType": "sql",
+    "devDatabaseType": "h2Disk",
+    "prodDatabaseType": "postgresql",
+    "searchEngine": "elasticsearch",
+    "messageBroker": false,
+    "serviceDiscoveryType": false,
+    "buildTool": "maven",
+    "enableSwaggerCodegen": false,
+    "jwtSecretKey": "ZjNhMGY5MjhkY2IxYWZkMTgwNDA2YWQyMWYxZWE4N2FjMWNlMjBhYjcxMjFmOGUyNzM4NjA0NjY0NzkzMTA1NzA1MzRkNWUwMGU4ZWUzMmY0M2QwMjA0ZWQyYTE2MTlhZWM1OWI3N2U5YWQ4Mjc4NzljMjNjYTgxNmI4NzViZmE=",
+    "clientFramework": "angularX",
+    "useSass": true,
+    "clientPackageManager": "npm",
+    "testFrameworks": [],
+    "jhiPrefix": "jhi",
+    "otherModules": [],
+    "enableTranslation": true,
+    "nativeLanguage": "pt-br",
+    "languages": [
+      "pt-br",
+      "pt-pt"
+    ]
+  }
+}
