@@ -1,7 +1,7 @@
 version: '2'
 services:
     agamotto-elasticsearch:
-        image: elasticsearch:5.6.5
+        image: elasticsearch:5.6.13
         # volumes:
         #     - ~/volumes/jhipster/agamotto/elasticsearch/:/usr/share/elasticsearch/data/
         ports:

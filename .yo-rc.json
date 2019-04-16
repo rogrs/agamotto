@@ -4,7 +4,7 @@
       "packageName": "br.com.rogrs",
       "nativeLanguage": "pt-br"
     },
-    "jhipsterVersion": "5.7.0",
+    "jhipsterVersion": "5.8.2",
     "applicationType": "monolith",
     "baseName": "agamotto",
     "packageName": "br.com.rogrs",
@@ -34,6 +34,8 @@
     "languages": [
       "pt-br",
       "pt-pt"
-    ]
+    ],
+    "entitySuffix": "",
+    "dtoSuffix": "DTO"
   }
 }
