@@ -4,21 +4,25 @@ import { HttpClientModule } from '@angular/common/http';
 import { Title } from '@angular/platform-browser';
 import locale from '@angular/common/locales/pt';
 
+import { NgbDateAdapter } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateMomentAdapter } from 'app/shared/util/datepicker-adapter';
+
 @NgModule({
-    imports: [HttpClientModule],
-    exports: [],
-    declarations: [],
-    providers: [
-        Title,
-        {
-            provide: LOCALE_ID,
-            useValue: 'pt'
-        },
-        DatePipe
-    ]
+  imports: [HttpClientModule],
+  exports: [],
+  declarations: [],
+  providers: [
+    Title,
+    {
+      provide: LOCALE_ID,
+      useValue: 'pt'
+    },
+    { provide: NgbDateAdapter, useClass: NgbDateMomentAdapter },
+    DatePipe
+  ]
 })
 export class AgamottoCoreModule {
-    constructor() {
-        registerLocaleData(locale);
-    }
+  constructor() {
+    registerLocaleData(locale);
+  }
 }

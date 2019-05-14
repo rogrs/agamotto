@@ -6,14 +6,12 @@ import br.com.rogrs.repository.UserRepository;
 import br.com.rogrs.security.jwt.TokenProvider;
 import br.com.rogrs.web.rest.errors.ExceptionTranslator;
 import br.com.rogrs.web.rest.vm.LoginVM;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,19 +25,16 @@ import static org.hamcrest.Matchers.isEmptyString;
 import static org.hamcrest.Matchers.not;
 
 /**
- * Test class for the UserJWTController REST controller.
- *
- * @see UserJWTController
+ * Integration tests for the {@link UserJWTController} REST controller.
  */
-@RunWith(SpringRunner.class)
 @SpringBootTest(classes = AgamottoApp.class)
-public class UserJWTControllerIntTest {
+public class UserJWTControllerIT {
 
     @Autowired
     private TokenProvider tokenProvider;
 
     @Autowired
-    private AuthenticationManager authenticationManager;
+    private AuthenticationManagerBuilder authenticationManager;
 
     @Autowired
     private UserRepository userRepository;
@@ -52,7 +47,7 @@ public class UserJWTControllerIntTest {
 
     private MockMvc mockMvc;
 
-    @Before
+    @BeforeEach
     public void setup() {
         UserJWTController userJWTController = new UserJWTController(tokenProvider, authenticationManager);
         this.mockMvc = MockMvcBuilders.standaloneSetup(userJWTController)
@@ -110,7 +105,6 @@ public class UserJWTControllerIntTest {
     }
 
     @Test
-    @Transactional
     public void testAuthorizeFails() throws Exception {
         LoginVM login = new LoginVM();
         login.setUsername("wrong-user");

@@ -1,20 +1,22 @@
 version: '2'
 services:
-    agamotto-app:
-        image: agamotto
-        environment:
-            - _JAVA_OPTIONS=-Xmx512m -Xms256m
-            - SPRING_PROFILES_ACTIVE=prod,swagger
-            - SPRING_DATASOURCE_URL=jdbc:postgresql://agamotto-postgresql:5432/agamotto
-            - JHIPSTER_SLEEP=10 # gives time for the database to boot before the application
-            - SPRING_DATA_JEST_URI=http://agamotto-elasticsearch:9200
-        ports:
-            - 8080:8080
-    agamotto-postgresql:
-        extends:
-            file: postgresql.yml
-            service: agamotto-postgresql
-    agamotto-elasticsearch:
-        extends:
-            file: elasticsearch.yml
-            service: agamotto-elasticsearch
+  agamotto-app:
+    image: agamotto
+    environment:
+      - _JAVA_OPTIONS=-Xmx512m -Xms256m
+      - SPRING_PROFILES_ACTIVE=prod,swagger
+      - MANAGEMENT_METRICS_EXPORT_PROMETHEUS_ENABLED=true
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://agamotto-postgresql:5432/agamotto
+      - JHIPSTER_SLEEP=10 # gives time for the database to boot before the application
+      - SPRING_DATA_JEST_URI=http://agamotto-elasticsearch:9200
+      - SPRING_ELASTICSEARCH_REST_URIS=http://agamotto-elasticsearch:9200
+    ports:
+      - 8080:8080
+  agamotto-postgresql:
+    extends:
+      file: postgresql.yml
+      service: agamotto-postgresql
+  agamotto-elasticsearch:
+    extends:
+      file: elasticsearch.yml
+      service: agamotto-elasticsearch
