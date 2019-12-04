@@ -1,6 +1,6 @@
 {
-  "name": "Agamotto",
-  "short_name": "Agamotto",
+  "name": "agamotto",
+  "short_name": "agamotto",
   "icons": [
       {
           "src": "./content/images/jhipster_family_member_2_head-192.png",

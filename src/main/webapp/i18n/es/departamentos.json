@@ -1,0 +1,25 @@
+{
+  "agamottoApp": {
+    "departamentos": {
+      "home": {
+        "title": "Departamentos",
+        "createLabel": "Crear nuevo Departamentos",
+        "createOrEditLabel": "Crear o editar Departamentos",
+        "search": "Buscar Departamentos",
+        "notFound": "Ningún Departamentos encontrado"
+      },
+      "created": "Un nuevo Departamentos ha sido creado con el identificador {{ param }}",
+      "updated": "Un Departamentos ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Departamentos ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Departamentos {{ id }}?"
+      },
+      "detail": {
+        "title": "Departamentos"
+      },
+      "nome": "Nome",
+      "equipes": "Equipes",
+      "unidadeNegocios": "Unidade Negocios"
+    }
+  }
+}

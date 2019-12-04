@@ -1,0 +1,41 @@
+{
+    "name": "ControlePonto",
+    "fields": [
+        {
+            "fieldName": "data",
+            "fieldType": "Duration",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "status",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "ponto",
+            "otherEntityRelationshipName": "controlePonto",
+            "relationshipName": "ponto"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "colaboradores",
+            "otherEntityRelationshipName": "controlePonto",
+            "relationshipName": "colaborador",
+            "otherEntityField": "nome"
+        }
+    ],
+    "changelogDate": "20191204030850",
+    "entityTableName": "controle_ponto",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}

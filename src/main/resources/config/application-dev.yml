@@ -34,7 +34,7 @@ spring:
   devtools:
     restart:
       enabled: true
-      additional-exclude: .h2.server.properties
+      additional-exclude: static/**,.h2.server.properties
     livereload:
       enabled: false # we use Webpack dev server + BrowserSync for livereload
   jackson:
@@ -42,7 +42,7 @@ spring:
       indent-output: true
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:h2:file:./target/h2db/db/agamotto;DB_CLOSE_DELAY=-1
+    url: jdbc:h2:file:./build/h2db/db/agamotto;DB_CLOSE_DELAY=-1
     username: agamotto
     password:
     hikari:
@@ -65,7 +65,7 @@ spring:
     elasticsearch:
       properties:
         path:
-          home: target/elasticsearch
+          home: build/elasticsearch
   liquibase:
     # Remove 'faker' if you do not want the sample data to be loaded automatically
     contexts: dev, faker
@@ -105,12 +105,11 @@ jhipster:
     authentication:
       jwt:
         # This token must be encoded using Base64 and be at least 256 bits long (you can type `openssl rand -base64 64` on your command line to generate a 512 bits one)
-        base64-secret: NzlkOGY2NTcxMjAzNTUzMjM0ZDkwNWQ3YjczMDJhYTFjNzg3YWQyMGMyNGExY2JkMzEyNzc5MWM1NTA5NWM3MjAxMzYzYWU4YzJjNGU3MjMyMTg3NGFjODU2MDY3NWExOTBlYzJlMGVjMGZmZTQ0YTk1ZDIyZTRkYzdmYWFmNDA=
+        base64-secret: YmY5ODA1ODJhZTJhYWFlMWJiZTBkZTIxZDliODc4ZTMyZWYxZGIyM2YwYjIxYTJmOWM3OTY3MjRiNzNiNWJlOTYwZDFhYjEyM2E2ZmNiMTkxNjI5NWE2NjkwZTdhNDkyNGI2OTlmNTRhY2FiMDU1NTQ2NDg4YzkyYTMwZjcxMjE=
         # Token is valid 24 hours
         token-validity-in-seconds: 86400
         token-validity-in-seconds-for-remember-me: 2592000
   mail: # specific JHipster mail property, for standard properties see MailProperties
-    from: agamotto@localhost
     base-url: http://127.0.0.1:8080
   metrics:
     logs: # Reports metrics in the logs
@@ -123,6 +122,9 @@ jhipster:
       host: localhost
       port: 5000
       queue-size: 512
+  audit-events:
+    retention-period: 30 # Number of days before audit events are deleted.
+
 # ===================================================================
 # Application specific properties
 # Add your own application properties here, see the ApplicationProperties class

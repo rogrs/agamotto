@@ -1,0 +1,31 @@
+{
+    "name": "Cargos",
+    "fields": [
+        {
+            "fieldName": "nome",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "colaboradores",
+            "otherEntityRelationshipName": "cargo",
+            "relationshipName": "colaborador",
+            "otherEntityField": "nome"
+        }
+    ],
+    "changelogDate": "20191204030845",
+    "entityTableName": "cargos",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}

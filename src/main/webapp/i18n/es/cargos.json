@@ -1,0 +1,24 @@
+{
+  "agamottoApp": {
+    "cargos": {
+      "home": {
+        "title": "Cargos",
+        "createLabel": "Crear nuevo Cargos",
+        "createOrEditLabel": "Crear o editar Cargos",
+        "search": "Buscar Cargos",
+        "notFound": "Ningún Cargos encontrado"
+      },
+      "created": "Un nuevo Cargos ha sido creado con el identificador {{ param }}",
+      "updated": "Un Cargos ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Cargos ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Cargos {{ id }}?"
+      },
+      "detail": {
+        "title": "Cargos"
+      },
+      "nome": "Nome",
+      "colaborador": "Colaborador"
+    }
+  }
+}

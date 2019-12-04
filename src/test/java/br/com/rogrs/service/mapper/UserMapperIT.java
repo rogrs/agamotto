@@ -1,6 +1,5 @@
 package br.com.rogrs.service.mapper;
 
-
 import br.com.rogrs.AgamottoApp;
 import br.com.rogrs.domain.User;
 import br.com.rogrs.service.dto.UserDTO;

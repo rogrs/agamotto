@@ -1,0 +1,24 @@
+{
+  "agamottoApp": {
+    "equipes": {
+      "home": {
+        "title": "Equipes",
+        "createLabel": "Crear nuevo Equipes",
+        "createOrEditLabel": "Crear o editar Equipes",
+        "search": "Buscar Equipes",
+        "notFound": "Ningún Equipes encontrado"
+      },
+      "created": "Un nuevo Equipes ha sido creado con el identificador {{ param }}",
+      "updated": "Un Equipes ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Equipes ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Equipes {{ id }}?"
+      },
+      "detail": {
+        "title": "Equipes"
+      },
+      "nome": "Nome",
+      "departamentos": "Departamentos"
+    }
+  }
+}

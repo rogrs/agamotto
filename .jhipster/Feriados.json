@@ -1,0 +1,45 @@
+{
+    "name": "Feriados",
+    "fields": [
+        {
+            "fieldName": "nome",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "fixoOuMudaTodoAno",
+            "fieldType": "Boolean",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "dataFeriado",
+            "fieldType": "LocalDate",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "unidadeNegocios",
+            "otherEntityRelationshipName": "feriados",
+            "relationshipName": "unidadeNegocios",
+            "otherEntityField": "razaoSocial"
+        }
+    ],
+    "changelogDate": "20191204030842",
+    "entityTableName": "feriados",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}

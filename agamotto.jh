@@ -1,0 +1,127 @@
+
+enum StatusArquivo {
+    CRIADO, ERRO, PROCESSADO
+}
+
+enum TipoBoolean {
+    SIM, NAO
+}
+
+enum TipoSexo {
+    FEMININO, MASCULINO
+}
+
+enum TipoRegistro {
+    CABECALHO, INCLUSAO_ALTERACAO, MARCACAO_PONTO, AJUSTE_TEMPO_REAL, INCLUSAO_ALTERACAO_EXCLUSAO, SEM_DEFINICAO
+}
+
+enum TipoOperacao {
+    INCLUSAO, ALTERACAO, MARCACAO_PONTO, CNPJ, CPF, SEM_DEFINICAO
+}
+
+enum TipoAjustes {
+    ABONO, FALTA_COM_DESCONTO, AJUSTE_HORARIO, DESCANSO_SEMANAL_REMUNERADO
+}
+
+enum TipoMotivoAjuste {
+    AJUSTE, FALTA
+}
+
+entity UnidadeNegocios {
+    razaoSocial String required,
+    nomeEmpresa String required,
+    cnpj String,
+    inscricaoEstadual String,
+    empregadora TipoBoolean required
+}
+
+entity Feriados {
+    nome String required,
+    fixoOuMudaTodoAno Boolean required,
+    dataFeriado LocalDate required
+}
+
+entity Departamentos {
+    nome String required
+}
+
+entity Equipes {
+    nome String required
+}
+
+entity Cargos {
+    nome String required
+}
+
+
+entity Turnos {
+    descricaoTurno String required,
+    intervaloFlexivel TipoBoolean required
+}
+
+entity Colaboradores {
+    nome String required,
+    matricula String required,
+    pis String required,
+    sexo TipoSexo required,
+    admissao LocalDate required,
+    cpf String,
+    ci String,
+    demissao LocalDate,
+    atualizado LocalDate,
+    criacao LocalDate
+}
+
+entity Arquivos {
+    nome String required,
+    caminho String required,
+    md5 String required,
+    status StatusArquivo,
+    tipo String,
+    totalLinhas Integer,
+    criacao LocalDate,
+    processamento LocalDate
+}
+
+entity LinhasArquivos  {
+    nsr String,
+    tipo String,
+    dataPonto String,
+    horaPonto String,
+    dataAjustada String,
+    horaAjustada String,
+    pis String,
+    nomeEmpregado String,
+    linha String,
+    tipoRegistro TipoRegistro,
+    tipoOperacao TipoOperacao
+}
+
+
+entity ControlePonto {
+    data Duration required,
+    status String
+
+}
+
+entity Ponto {
+    marcacao Duration required,
+    motivo TipoMotivoAjuste required
+}
+
+
+
+// defining multiple OneToMany relationships with comments
+relationship OneToMany {
+	Arquivos{linhas(pis)} to LinhasArquivos{arquivos(nome)},
+	UnidadeNegocios{feriados(nome)} to Feriados{unidadeNegocios(razaoSocial)},
+	UnidadeNegocios{departamentos(nome)} to Departamentos{unidadeNegocios(razaoSocial)},
+	Departamentos{equipes(nome)} to Equipes{departamentos(nome)},
+    Colaboradores{cargo(nome)} to Cargos{colaborador(nome)}
+    Colaboradores{controlePonto} to ControlePonto{colaborador(nome)}
+	ControlePonto{ponto} to Ponto
+}
+
+
+// Set pagination options
+paginate Arquivos, LinhasArquivos, Colaboradores with infinite-scroll

@@ -1,0 +1,34 @@
+{
+  "agamottoApp": {
+    "colaboradores": {
+      "home": {
+        "title": "Colaboradores",
+        "createLabel": "Criar novo Colaboradores",
+        "createOrEditLabel": "Criar ou editar Colaboradores",
+        "search": "Pesquisar por Colaboradores",
+        "notFound": "Nenhum Colaboradores encontrado"
+      },
+      "created": "Um novo Colaboradores foi criado com o identificador {{ param }}",
+      "updated": "Um Colaboradores foi atualizado com o identificador {{ param }}",
+      "deleted": "Um Colaboradores foi excluído com o identificador {{ param }}",
+      "delete": {
+        "question": "Tem certeza de que deseja excluir Colaboradores {{ id }}?"
+      },
+      "detail": {
+        "title": "Colaboradores"
+      },
+      "nome": "Nome",
+      "matricula": "Matricula",
+      "pis": "Pis",
+      "sexo": "Sexo",
+      "admissao": "Admissao",
+      "cpf": "Cpf",
+      "ci": "Ci",
+      "demissao": "Demissao",
+      "atualizado": "Atualizado",
+      "criacao": "Criacao",
+      "cargo": "Cargo",
+      "controlePonto": "Controle Ponto"
+    }
+  }
+}

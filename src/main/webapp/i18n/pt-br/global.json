@@ -7,6 +7,17 @@
       "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
       "entities": {
         "main": "Entidades",
+        "unidadeNegocios": "Unidade Negocios",
+        "feriados": "Feriados",
+        "departamentos": "Departamentos",
+        "equipes": "Equipes",
+        "cargos": "Cargos",
+        "turnos": "Turnos",
+        "colaboradores": "Colaboradores",
+        "arquivos": "Arquivos",
+        "linhasArquivos": "Linhas Arquivos",
+        "controlePonto": "Controle Ponto",
+        "ponto": "Ponto",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {
@@ -36,8 +47,8 @@
     "form": {
       "username.label": "Usuário",
       "username.placeholder": "Seu usuário",
-      "currentpassword.label": "Current password",
-      "currentpassword.placeholder": "Current password",
+      "currentpassword.label": "Senha atual",
+      "currentpassword.placeholder": "Senha atual",
       "newpassword.label": "Nova senha",
       "newpassword.placeholder": "Nova senha",
       "confirmpassword.label": "Confirmação de nova senha",
@@ -69,7 +80,7 @@
         },
         "confirmpassword": {
           "required": "A confirmação da senha é obrigatória.",
-          "minlength": "A confirmação da senha deve ter pelo menos 5 caracteres",
+          "minlength": "A confirmação da senha deve ter pelo menos 4 caracteres",
           "maxlength": "A confirmação da senha não pode ter mais de 50 caracteres"
         },
         "email": {
@@ -84,7 +95,7 @@
       "id": "Código"
     },
     "ribbon": {
-      "dev": "Development"
+      "dev": "Desenvolvimento"
     },
     "item-count": "Mostrando {{first}} - {{second}} de {{total}} resultados."
   },

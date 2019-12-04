@@ -1,0 +1,24 @@
+{
+  "agamottoApp": {
+    "turnos": {
+      "home": {
+        "title": "Turnos",
+        "createLabel": "Crear nuevo Turnos",
+        "createOrEditLabel": "Crear o editar Turnos",
+        "search": "Buscar Turnos",
+        "notFound": "Ningún Turnos encontrado"
+      },
+      "created": "Un nuevo Turnos ha sido creado con el identificador {{ param }}",
+      "updated": "Un Turnos ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Turnos ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Turnos {{ id }}?"
+      },
+      "detail": {
+        "title": "Turnos"
+      },
+      "descricaoTurno": "Descricao Turno",
+      "intervaloFlexivel": "Intervalo Flexivel"
+    }
+  }
+}

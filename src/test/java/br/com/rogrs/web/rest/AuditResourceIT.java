@@ -1,6 +1,7 @@
 package br.com.rogrs.web.rest;
 
 import br.com.rogrs.AgamottoApp;
+import io.github.jhipster.config.JHipsterProperties;
 import br.com.rogrs.config.audit.AuditEventConverter;
 import br.com.rogrs.domain.PersistentAuditEvent;
 import br.com.rogrs.repository.PersistenceAuditEventRepository;
@@ -46,6 +47,9 @@ public class AuditResourceIT {
     private AuditEventConverter auditEventConverter;
 
     @Autowired
+    private JHipsterProperties jhipsterProperties;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -63,7 +67,7 @@ public class AuditResourceIT {
     public void setup() {
         MockitoAnnotations.initMocks(this);
         AuditEventService auditEventService =
-            new AuditEventService(auditEventRepository, auditEventConverter);
+            new AuditEventService(auditEventRepository, auditEventConverter, jhipsterProperties);
         AuditResource auditResource = new AuditResource(auditEventService);
         this.restAuditMockMvc = MockMvcBuilders.standaloneSetup(auditResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)

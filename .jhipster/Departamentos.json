@@ -1,0 +1,37 @@
+{
+    "name": "Departamentos",
+    "fields": [
+        {
+            "fieldName": "nome",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "equipes",
+            "otherEntityRelationshipName": "departamentos",
+            "relationshipName": "equipes"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "unidadeNegocios",
+            "otherEntityRelationshipName": "departamentos",
+            "relationshipName": "unidadeNegocios",
+            "otherEntityField": "razaoSocial"
+        }
+    ],
+    "changelogDate": "20191204030843",
+    "entityTableName": "departamentos",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}

@@ -46,7 +46,10 @@ spring:
     elasticsearch:
       properties:
         path:
-          home: target/elasticsearch
+          home: build/elasticsearch
+        # See https://github.com/jhipster/generator-jhipster/issues/10302
+        node:
+          max_local_storage_nodes: 2
   liquibase:
     contexts: test
   mail:
@@ -88,9 +91,8 @@ jhipster:
   logging:
     # To test json console appender
     use-json-format: true # By default, logs are in Json format
-    # To test logstash appender
     logstash:
-      enabled: true
+      enabled: false
       host: localhost
       port: 5000
       queue-size: 512
@@ -101,7 +103,7 @@ jhipster:
     authentication:
       jwt:
         # This token must be encoded using Base64 (you can type `echo 'secret-key'|base64` on your command line)
-        base64-secret: NzlkOGY2NTcxMjAzNTUzMjM0ZDkwNWQ3YjczMDJhYTFjNzg3YWQyMGMyNGExY2JkMzEyNzc5MWM1NTA5NWM3MjAxMzYzYWU4YzJjNGU3MjMyMTg3NGFjODU2MDY3NWExOTBlYzJlMGVjMGZmZTQ0YTk1ZDIyZTRkYzdmYWFmNDA=
+        base64-secret: YmY5ODA1ODJhZTJhYWFlMWJiZTBkZTIxZDliODc4ZTMyZWYxZGIyM2YwYjIxYTJmOWM3OTY3MjRiNzNiNWJlOTYwZDFhYjEyM2E2ZmNiMTkxNjI5NWE2NjkwZTdhNDkyNGI2OTlmNTRhY2FiMDU1NTQ2NDg4YzkyYTMwZjcxMjE=
         # Token is valid 24 hours
         token-validity-in-seconds: 86400
   metrics:

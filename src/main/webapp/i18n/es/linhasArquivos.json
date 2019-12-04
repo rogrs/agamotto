@@ -1,0 +1,34 @@
+{
+  "agamottoApp": {
+    "linhasArquivos": {
+      "home": {
+        "title": "Linhas Arquivos",
+        "createLabel": "Crear nuevo Linhas Arquivos",
+        "createOrEditLabel": "Crear o editar Linhas Arquivos",
+        "search": "Buscar Linhas Arquivos",
+        "notFound": "Ningún Linhas Arquivos encontrado"
+      },
+      "created": "Un nuevo Linhas Arquivos ha sido creado con el identificador {{ param }}",
+      "updated": "Un Linhas Arquivos ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Linhas Arquivos ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Linhas Arquivos {{ id }}?"
+      },
+      "detail": {
+        "title": "Linhas Arquivos"
+      },
+      "nsr": "Nsr",
+      "tipo": "Tipo",
+      "dataPonto": "Data Ponto",
+      "horaPonto": "Hora Ponto",
+      "dataAjustada": "Data Ajustada",
+      "horaAjustada": "Hora Ajustada",
+      "pis": "Pis",
+      "nomeEmpregado": "Nome Empregado",
+      "linha": "Linha",
+      "tipoRegistro": "Tipo Registro",
+      "tipoOperacao": "Tipo Operacao",
+      "arquivos": "Arquivos"
+    }
+  }
+}

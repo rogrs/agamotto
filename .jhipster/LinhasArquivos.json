@@ -1,0 +1,70 @@
+{
+    "name": "LinhasArquivos",
+    "fields": [
+        {
+            "fieldName": "nsr",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "tipo",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "dataPonto",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "horaPonto",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "dataAjustada",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "horaAjustada",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "pis",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "nomeEmpregado",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "linha",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "tipoRegistro",
+            "fieldType": "TipoRegistro",
+            "fieldValues": "CABECALHO,INCLUSAO_ALTERACAO,MARCACAO_PONTO,AJUSTE_TEMPO_REAL,INCLUSAO_ALTERACAO_EXCLUSAO,SEM_DEFINICAO"
+        },
+        {
+            "fieldName": "tipoOperacao",
+            "fieldType": "TipoOperacao",
+            "fieldValues": "INCLUSAO,ALTERACAO,MARCACAO_PONTO,CNPJ,CPF,SEM_DEFINICAO"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "arquivos",
+            "otherEntityRelationshipName": "linhas",
+            "relationshipName": "arquivos",
+            "otherEntityField": "nome"
+        }
+    ],
+    "changelogDate": "20191204030849",
+    "entityTableName": "linhas_arquivos",
+    "dto": "no",
+    "pagination": "infinite-scroll",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}

@@ -1,0 +1,31 @@
+{
+    "name": "Turnos",
+    "fields": [
+        {
+            "fieldName": "descricaoTurno",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "intervaloFlexivel",
+            "fieldType": "TipoBoolean",
+            "fieldValues": "SIM,NAO",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [],
+    "changelogDate": "20191204030846",
+    "entityTableName": "turnos",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}

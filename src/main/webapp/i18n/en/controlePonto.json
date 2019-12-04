@@ -1,0 +1,26 @@
+{
+  "agamottoApp": {
+    "controlePonto": {
+      "home": {
+        "title": "Controle Pontos",
+        "createLabel": "Create a new Controle Ponto",
+        "createOrEditLabel": "Create or edit a Controle Ponto",
+        "search": "Search for Controle Ponto",
+        "notFound": "No Controle Pontos found"
+      },
+      "created": "A new Controle Ponto is created with identifier {{ param }}",
+      "updated": "A Controle Ponto is updated with identifier {{ param }}",
+      "deleted": "A Controle Ponto is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Controle Ponto {{ id }}?"
+      },
+      "detail": {
+        "title": "Controle Ponto"
+      },
+      "data": "Data",
+      "status": "Status",
+      "ponto": "Ponto",
+      "colaborador": "Colaborador"
+    }
+  }
+}

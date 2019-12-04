@@ -1,0 +1,25 @@
+{
+  "agamottoApp": {
+    "ponto": {
+      "home": {
+        "title": "Pontos",
+        "createLabel": "Crear nuevo Ponto",
+        "createOrEditLabel": "Crear o editar Ponto",
+        "search": "Buscar Ponto",
+        "notFound": "Ningún Pontos encontrado"
+      },
+      "created": "Un nuevo Ponto ha sido creado con el identificador {{ param }}",
+      "updated": "Un Ponto ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Ponto ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Ponto {{ id }}?"
+      },
+      "detail": {
+        "title": "Ponto"
+      },
+      "marcacao": "Marcacao",
+      "motivo": "Motivo",
+      "controlePonto": "Controle Ponto"
+    }
+  }
+}

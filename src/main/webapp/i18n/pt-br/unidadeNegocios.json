@@ -1,0 +1,29 @@
+{
+  "agamottoApp": {
+    "unidadeNegocios": {
+      "home": {
+        "title": "Unidade Negocios",
+        "createLabel": "Criar novo Unidade Negocios",
+        "createOrEditLabel": "Criar ou editar Unidade Negocios",
+        "search": "Pesquisar por Unidade Negocios",
+        "notFound": "Nenhum Unidade Negocios encontrado"
+      },
+      "created": "Um novo Unidade Negocios foi criado com o identificador {{ param }}",
+      "updated": "Um Unidade Negocios foi atualizado com o identificador {{ param }}",
+      "deleted": "Um Unidade Negocios foi excluído com o identificador {{ param }}",
+      "delete": {
+        "question": "Tem certeza de que deseja excluir Unidade Negocios {{ id }}?"
+      },
+      "detail": {
+        "title": "Unidade Negocios"
+      },
+      "razaoSocial": "Razao Social",
+      "nomeEmpresa": "Nome Empresa",
+      "cnpj": "Cnpj",
+      "inscricaoEstadual": "Inscricao Estadual",
+      "empregadora": "Empregadora",
+      "feriados": "Feriados",
+      "departamentos": "Departamentos"
+    }
+  }
+}

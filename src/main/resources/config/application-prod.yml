@@ -16,8 +16,8 @@
 logging:
   level:
     ROOT: INFO
-    br.com.rogrs: INFO
     io.github.jhipster: INFO
+    br.com.rogrs: INFO
 
 management:
   metrics:
@@ -49,6 +49,12 @@ spring:
       hibernate.cache.use_second_level_cache: true
       hibernate.cache.use_query_cache: false
       hibernate.generate_statistics: false
+      # modify batch size as necessary
+      hibernate.jdbc.batch_size: 25
+      hibernate.order_inserts: true
+      hibernate.order_updates: true
+      hibernate.query.fail_on_pagination_over_collection_fetch: true
+      hibernate.query.in_clause_parameter_padding: true
   data:
     jest:
       uri: http://localhost:9200
@@ -115,12 +121,11 @@ jhipster:
         # - In the JHipster Registry (which includes a Spring Cloud Config server)
         # - In a separate `application-prod.yml` file, in the same folder as your executable JAR file
         # - In the `JHIPSTER_SECURITY_AUTHENTICATION_JWT_BASE64_SECRET` environment variable
-        base64-secret: NzlkOGY2NTcxMjAzNTUzMjM0ZDkwNWQ3YjczMDJhYTFjNzg3YWQyMGMyNGExY2JkMzEyNzc5MWM1NTA5NWM3MjAxMzYzYWU4YzJjNGU3MjMyMTg3NGFjODU2MDY3NWExOTBlYzJlMGVjMGZmZTQ0YTk1ZDIyZTRkYzdmYWFmNDA=
+        base64-secret: YmY5ODA1ODJhZTJhYWFlMWJiZTBkZTIxZDliODc4ZTMyZWYxZGIyM2YwYjIxYTJmOWM3OTY3MjRiNzNiNWJlOTYwZDFhYjEyM2E2ZmNiMTkxNjI5NWE2NjkwZTdhNDkyNGI2OTlmNTRhY2FiMDU1NTQ2NDg4YzkyYTMwZjcxMjE=
         # Token is valid 24 hours
         token-validity-in-seconds: 86400
         token-validity-in-seconds-for-remember-me: 2592000
   mail: # specific JHipster mail property, for standard properties see MailProperties
-    from: agamotto@localhost
     base-url: http://my-server-url-to-change # Modify according to your server's URL
   metrics:
     logs: # Reports metrics in the logs
@@ -133,6 +138,9 @@ jhipster:
       host: localhost
       port: 5000
       queue-size: 512
+  audit-events:
+    retention-period: 30 # Number of days before audit events are deleted.
+
 # ===================================================================
 # Application specific properties
 # Add your own application properties here, see the ApplicationProperties class

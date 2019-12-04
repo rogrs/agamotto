@@ -1,0 +1,9 @@
+{
+  "agamottoApp": {
+    "TipoBoolean": {
+      "null": "",
+      "SIM": "SIM",
+      "NAO": "NAO"
+    }
+  }
+}

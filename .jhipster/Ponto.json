@@ -1,0 +1,39 @@
+{
+    "name": "Ponto",
+    "fields": [
+        {
+            "fieldName": "marcacao",
+            "fieldType": "Duration",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "motivo",
+            "fieldType": "TipoMotivoAjuste",
+            "fieldValues": "AJUSTE,FALTA",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "controlePonto",
+            "otherEntityRelationshipName": "ponto",
+            "relationshipName": "controlePonto",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20191204030851",
+    "entityTableName": "ponto",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}

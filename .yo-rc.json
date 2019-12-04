@@ -2,9 +2,9 @@
   "generator-jhipster": {
     "promptValues": {
       "packageName": "br.com.rogrs",
-      "nativeLanguage": "pt-br"
+      "nativeLanguage": "en"
     },
-    "jhipsterVersion": "6.0.1",
+    "jhipsterVersion": "6.5.1",
     "applicationType": "monolith",
     "baseName": "agamotto",
     "packageName": "br.com.rogrs",
@@ -20,21 +20,23 @@
     "searchEngine": "elasticsearch",
     "messageBroker": false,
     "serviceDiscoveryType": false,
-    "buildTool": "maven",
+    "buildTool": "gradle",
     "enableSwaggerCodegen": false,
-    "jwtSecretKey": "NzlkOGY2NTcxMjAzNTUzMjM0ZDkwNWQ3YjczMDJhYTFjNzg3YWQyMGMyNGExY2JkMzEyNzc5MWM1NTA5NWM3MjAxMzYzYWU4YzJjNGU3MjMyMTg3NGFjODU2MDY3NWExOTBlYzJlMGVjMGZmZTQ0YTk1ZDIyZTRkYzdmYWFmNDA=",
-    "clientFramework": "angularX",
-    "clientTheme": "none",
-    "clientThemeVariant": "",
+    "jwtSecretKey": "YmY5ODA1ODJhZTJhYWFlMWJiZTBkZTIxZDliODc4ZTMyZWYxZGIyM2YwYjIxYTJmOWM3OTY3MjRiNzNiNWJlOTYwZDFhYjEyM2E2ZmNiMTkxNjI5NWE2NjkwZTdhNDkyNGI2OTlmNTRhY2FiMDU1NTQ2NDg4YzkyYTMwZjcxMjE=",
+    "embeddableLaunchScript": false,
     "useSass": true,
     "clientPackageManager": "npm",
-    "testFrameworks": [],
+    "clientFramework": "react",
+    "clientTheme": "none",
+    "clientThemeVariant": "",
+    "testFrameworks": ["cucumber"],
     "jhiPrefix": "jhi",
     "entitySuffix": "",
     "dtoSuffix": "DTO",
     "otherModules": [],
     "enableTranslation": true,
-    "nativeLanguage": "pt-br",
-    "languages": ["pt-br", "pt-pt"]
+    "nativeLanguage": "en",
+    "languages": ["en", "pt-br", "es"],
+    "blueprints": []
   }
 }

@@ -1,0 +1,26 @@
+{
+  "agamottoApp": {
+    "feriados": {
+      "home": {
+        "title": "Feriados",
+        "createLabel": "Crear nuevo Feriados",
+        "createOrEditLabel": "Crear o editar Feriados",
+        "search": "Buscar Feriados",
+        "notFound": "Ningún Feriados encontrado"
+      },
+      "created": "Un nuevo Feriados ha sido creado con el identificador {{ param }}",
+      "updated": "Un Feriados ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Feriados ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Feriados {{ id }}?"
+      },
+      "detail": {
+        "title": "Feriados"
+      },
+      "nome": "Nome",
+      "fixoOuMudaTodoAno": "Fixo Ou Muda Todo Ano",
+      "dataFeriado": "Data Feriado",
+      "unidadeNegocios": "Unidade Negocios"
+    }
+  }
+}

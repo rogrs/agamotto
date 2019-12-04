@@ -1,0 +1,59 @@
+{
+    "name": "UnidadeNegocios",
+    "fields": [
+        {
+            "fieldName": "razaoSocial",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "nomeEmpresa",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "cnpj",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "inscricaoEstadual",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "empregadora",
+            "fieldType": "TipoBoolean",
+            "fieldValues": "SIM,NAO",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "feriados",
+            "otherEntityRelationshipName": "unidadeNegocios",
+            "relationshipName": "feriados"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "departamentos",
+            "otherEntityRelationshipName": "unidadeNegocios",
+            "relationshipName": "departamentos"
+        }
+    ],
+    "changelogDate": "20191204030841",
+    "entityTableName": "unidade_negocios",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}

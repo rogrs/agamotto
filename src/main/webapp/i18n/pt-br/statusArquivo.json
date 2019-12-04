@@ -1,0 +1,10 @@
+{
+  "agamottoApp": {
+    "StatusArquivo": {
+      "null": "",
+      "CRIADO": "CRIADO",
+      "ERRO": "ERRO",
+      "PROCESSADO": "PROCESSADO"
+    }
+  }
+}
