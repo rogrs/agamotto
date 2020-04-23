@@ -136,7 +136,6 @@ export const updateEntity: ICrudPutAction<IFeriados> = entity => async dispatch 
     type: ACTION_TYPES.UPDATE_FERIADOS,
     payload: axios.put(apiUrl, cleanEntity(entity))
   });
-  dispatch(getEntities());
   return result;
 };
 
@@ -146,7 +145,6 @@ export const deleteEntity: ICrudDeleteAction<IFeriados> = id => async dispatch =
     type: ACTION_TYPES.DELETE_FERIADOS,
     payload: axios.delete(requestUrl)
   });
-  dispatch(getEntities());
   return result;
 };
 

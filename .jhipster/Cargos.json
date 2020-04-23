@@ -18,7 +18,7 @@
             "otherEntityField": "nome"
         }
     ],
-    "changelogDate": "20191204030845",
+    "changelogDate": "20200423165200",
     "entityTableName": "cargos",
     "dto": "no",
     "pagination": "no",
@@ -26,6 +26,7 @@
     "jpaMetamodelFiltering": false,
     "fluentMethods": true,
     "readOnly": false,
+    "embedded": false,
     "clientRootFolder": "",
     "applications": "*"
 }

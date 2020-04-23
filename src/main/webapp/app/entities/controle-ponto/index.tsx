@@ -11,12 +11,12 @@ import ControlePontoDeleteDialog from './controle-ponto-delete-dialog';
 const Routes = ({ match }) => (
   <>
     <Switch>
+      <ErrorBoundaryRoute exact path={`${match.url}/:id/delete`} component={ControlePontoDeleteDialog} />
       <ErrorBoundaryRoute exact path={`${match.url}/new`} component={ControlePontoUpdate} />
       <ErrorBoundaryRoute exact path={`${match.url}/:id/edit`} component={ControlePontoUpdate} />
       <ErrorBoundaryRoute exact path={`${match.url}/:id`} component={ControlePontoDetail} />
       <ErrorBoundaryRoute path={match.url} component={ControlePonto} />
     </Switch>
-    <ErrorBoundaryRoute path={`${match.url}/:id/delete`} component={ControlePontoDeleteDialog} />
   </>
 );
 

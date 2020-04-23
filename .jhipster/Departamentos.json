@@ -24,7 +24,7 @@
             "otherEntityField": "razaoSocial"
         }
     ],
-    "changelogDate": "20191204030843",
+    "changelogDate": "20200423165000",
     "entityTableName": "departamentos",
     "dto": "no",
     "pagination": "no",
@@ -32,6 +32,7 @@
     "jpaMetamodelFiltering": false,
     "fluentMethods": true,
     "readOnly": false,
+    "embedded": false,
     "clientRootFolder": "",
     "applications": "*"
 }

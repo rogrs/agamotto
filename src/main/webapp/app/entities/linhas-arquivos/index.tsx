@@ -11,12 +11,12 @@ import LinhasArquivosDeleteDialog from './linhas-arquivos-delete-dialog';
 const Routes = ({ match }) => (
   <>
     <Switch>
+      <ErrorBoundaryRoute exact path={`${match.url}/:id/delete`} component={LinhasArquivosDeleteDialog} />
       <ErrorBoundaryRoute exact path={`${match.url}/new`} component={LinhasArquivosUpdate} />
       <ErrorBoundaryRoute exact path={`${match.url}/:id/edit`} component={LinhasArquivosUpdate} />
       <ErrorBoundaryRoute exact path={`${match.url}/:id`} component={LinhasArquivosDetail} />
       <ErrorBoundaryRoute path={match.url} component={LinhasArquivos} />
     </Switch>
-    <ErrorBoundaryRoute path={`${match.url}/:id/delete`} component={LinhasArquivosDeleteDialog} />
   </>
 );
 

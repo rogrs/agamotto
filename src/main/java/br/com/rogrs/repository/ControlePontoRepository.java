@@ -1,8 +1,9 @@
 package br.com.rogrs.repository;
+
 import br.com.rogrs.domain.ControlePonto;
+
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
-
 
 /**
  * Spring Data  repository for the ControlePonto entity.
@@ -10,5 +11,4 @@ import org.springframework.stereotype.Repository;
 @SuppressWarnings("unused")
 @Repository
 public interface ControlePontoRepository extends JpaRepository<ControlePonto, Long> {
-
 }

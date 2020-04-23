@@ -4,26 +4,23 @@ import br.com.rogrs.AgamottoApp;
 import br.com.rogrs.domain.Turnos;
 import br.com.rogrs.repository.TurnosRepository;
 import br.com.rogrs.repository.search.TurnosSearchRepository;
-import br.com.rogrs.web.rest.errors.ExceptionTranslator;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.MockitoAnnotations;
+import org.mockito.Mock;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.Validator;
-
 import javax.persistence.EntityManager;
 import java.util.Collections;
 import java.util.List;
 
-import static br.com.rogrs.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 import static org.hamcrest.Matchers.hasItem;
@@ -36,6 +33,9 @@ import br.com.rogrs.domain.enumeration.TipoBoolean;
  * Integration tests for the {@link TurnosResource} REST controller.
  */
 @SpringBootTest(classes = AgamottoApp.class)
+@ExtendWith(MockitoExtension.class)
+@AutoConfigureMockMvc
+@WithMockUser
 public class TurnosResourceIT {
 
     private static final String DEFAULT_DESCRICAO_TURNO = "AAAAAAAAAA";
@@ -56,35 +56,12 @@ public class TurnosResourceIT {
     private TurnosSearchRepository mockTurnosSearchRepository;
 
     @Autowired
-    private MappingJackson2HttpMessageConverter jacksonMessageConverter;
-
-    @Autowired
-    private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
-
-    @Autowired
-    private ExceptionTranslator exceptionTranslator;
-
-    @Autowired
     private EntityManager em;
 
     @Autowired
-    private Validator validator;
-
     private MockMvc restTurnosMockMvc;
 
     private Turnos turnos;
-
-    @BeforeEach
-    public void setup() {
-        MockitoAnnotations.initMocks(this);
-        final TurnosResource turnosResource = new TurnosResource(turnosRepository, mockTurnosSearchRepository);
-        this.restTurnosMockMvc = MockMvcBuilders.standaloneSetup(turnosResource)
-            .setCustomArgumentResolvers(pageableArgumentResolver)
-            .setControllerAdvice(exceptionTranslator)
-            .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter)
-            .setValidator(validator).build();
-    }
 
     /**
      * Create an entity for this test.
@@ -123,7 +100,7 @@ public class TurnosResourceIT {
 
         // Create the Turnos
         restTurnosMockMvc.perform(post("/api/turnos")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(turnos)))
             .andExpect(status().isCreated());
 
@@ -148,7 +125,7 @@ public class TurnosResourceIT {
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restTurnosMockMvc.perform(post("/api/turnos")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(turnos)))
             .andExpect(status().isBadRequest());
 
@@ -171,7 +148,7 @@ public class TurnosResourceIT {
         // Create the Turnos, which fails.
 
         restTurnosMockMvc.perform(post("/api/turnos")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(turnos)))
             .andExpect(status().isBadRequest());
 
@@ -189,7 +166,7 @@ public class TurnosResourceIT {
         // Create the Turnos, which fails.
 
         restTurnosMockMvc.perform(post("/api/turnos")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(turnos)))
             .andExpect(status().isBadRequest());
 
@@ -206,7 +183,7 @@ public class TurnosResourceIT {
         // Get all the turnosList
         restTurnosMockMvc.perform(get("/api/turnos?sort=id,desc"))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(turnos.getId().intValue())))
             .andExpect(jsonPath("$.[*].descricaoTurno").value(hasItem(DEFAULT_DESCRICAO_TURNO)))
             .andExpect(jsonPath("$.[*].intervaloFlexivel").value(hasItem(DEFAULT_INTERVALO_FLEXIVEL.toString())));
@@ -221,7 +198,7 @@ public class TurnosResourceIT {
         // Get the turnos
         restTurnosMockMvc.perform(get("/api/turnos/{id}", turnos.getId()))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(turnos.getId().intValue()))
             .andExpect(jsonPath("$.descricaoTurno").value(DEFAULT_DESCRICAO_TURNO))
             .andExpect(jsonPath("$.intervaloFlexivel").value(DEFAULT_INTERVALO_FLEXIVEL.toString()));
@@ -252,7 +229,7 @@ public class TurnosResourceIT {
             .intervaloFlexivel(UPDATED_INTERVALO_FLEXIVEL);
 
         restTurnosMockMvc.perform(put("/api/turnos")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(updatedTurnos)))
             .andExpect(status().isOk());
 
@@ -276,7 +253,7 @@ public class TurnosResourceIT {
 
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restTurnosMockMvc.perform(put("/api/turnos")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(turnos)))
             .andExpect(status().isBadRequest());
 
@@ -298,7 +275,7 @@ public class TurnosResourceIT {
 
         // Delete the turnos
         restTurnosMockMvc.perform(delete("/api/turnos/{id}", turnos.getId())
-            .accept(TestUtil.APPLICATION_JSON_UTF8))
+            .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNoContent());
 
         // Validate the database contains one less item
@@ -319,7 +296,7 @@ public class TurnosResourceIT {
         // Search the turnos
         restTurnosMockMvc.perform(get("/api/_search/turnos?query=id:" + turnos.getId()))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(turnos.getId().intValue())))
             .andExpect(jsonPath("$.[*].descricaoTurno").value(hasItem(DEFAULT_DESCRICAO_TURNO)))
             .andExpect(jsonPath("$.[*].intervaloFlexivel").value(hasItem(DEFAULT_INTERVALO_FLEXIVEL.toString())));

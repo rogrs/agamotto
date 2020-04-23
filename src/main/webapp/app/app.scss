@@ -1,8 +1,9 @@
 // Override Boostrap variables
+@import '~bootswatch/dist/litera/variables';
 // Import Bootstrap source files from node_modules
 @import 'node_modules/bootstrap/scss/bootstrap';
+@import '~bootswatch/dist/litera/bootswatch';
 body {
-  background: #fafafa;
   margin: 0;
 }
 
@@ -307,11 +308,6 @@ http://stackoverflow.com/questions/23436430/bootstrap-3-input-group-100-width */
 
 .width-min {
   width: 1% !important;
-}
-
-// Fix checkbox alignment https://github.com/jhipster/generator-jhipster/issues/8463
-.form-check-input {
-  margin-top: -0.5rem;
 }
 
 /* jhipster-needle-scss-add-main JHipster will add new css style */

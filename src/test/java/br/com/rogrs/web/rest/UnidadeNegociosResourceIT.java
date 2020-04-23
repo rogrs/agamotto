@@ -4,26 +4,23 @@ import br.com.rogrs.AgamottoApp;
 import br.com.rogrs.domain.UnidadeNegocios;
 import br.com.rogrs.repository.UnidadeNegociosRepository;
 import br.com.rogrs.repository.search.UnidadeNegociosSearchRepository;
-import br.com.rogrs.web.rest.errors.ExceptionTranslator;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.MockitoAnnotations;
+import org.mockito.Mock;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.Validator;
-
 import javax.persistence.EntityManager;
 import java.util.Collections;
 import java.util.List;
 
-import static br.com.rogrs.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 import static org.hamcrest.Matchers.hasItem;
@@ -36,6 +33,9 @@ import br.com.rogrs.domain.enumeration.TipoBoolean;
  * Integration tests for the {@link UnidadeNegociosResource} REST controller.
  */
 @SpringBootTest(classes = AgamottoApp.class)
+@ExtendWith(MockitoExtension.class)
+@AutoConfigureMockMvc
+@WithMockUser
 public class UnidadeNegociosResourceIT {
 
     private static final String DEFAULT_RAZAO_SOCIAL = "AAAAAAAAAA";
@@ -65,35 +65,12 @@ public class UnidadeNegociosResourceIT {
     private UnidadeNegociosSearchRepository mockUnidadeNegociosSearchRepository;
 
     @Autowired
-    private MappingJackson2HttpMessageConverter jacksonMessageConverter;
-
-    @Autowired
-    private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
-
-    @Autowired
-    private ExceptionTranslator exceptionTranslator;
-
-    @Autowired
     private EntityManager em;
 
     @Autowired
-    private Validator validator;
-
     private MockMvc restUnidadeNegociosMockMvc;
 
     private UnidadeNegocios unidadeNegocios;
-
-    @BeforeEach
-    public void setup() {
-        MockitoAnnotations.initMocks(this);
-        final UnidadeNegociosResource unidadeNegociosResource = new UnidadeNegociosResource(unidadeNegociosRepository, mockUnidadeNegociosSearchRepository);
-        this.restUnidadeNegociosMockMvc = MockMvcBuilders.standaloneSetup(unidadeNegociosResource)
-            .setCustomArgumentResolvers(pageableArgumentResolver)
-            .setControllerAdvice(exceptionTranslator)
-            .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter)
-            .setValidator(validator).build();
-    }
 
     /**
      * Create an entity for this test.
@@ -138,7 +115,7 @@ public class UnidadeNegociosResourceIT {
 
         // Create the UnidadeNegocios
         restUnidadeNegociosMockMvc.perform(post("/api/unidade-negocios")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(unidadeNegocios)))
             .andExpect(status().isCreated());
 
@@ -166,7 +143,7 @@ public class UnidadeNegociosResourceIT {
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restUnidadeNegociosMockMvc.perform(post("/api/unidade-negocios")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(unidadeNegocios)))
             .andExpect(status().isBadRequest());
 
@@ -189,7 +166,7 @@ public class UnidadeNegociosResourceIT {
         // Create the UnidadeNegocios, which fails.
 
         restUnidadeNegociosMockMvc.perform(post("/api/unidade-negocios")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(unidadeNegocios)))
             .andExpect(status().isBadRequest());
 
@@ -207,7 +184,7 @@ public class UnidadeNegociosResourceIT {
         // Create the UnidadeNegocios, which fails.
 
         restUnidadeNegociosMockMvc.perform(post("/api/unidade-negocios")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(unidadeNegocios)))
             .andExpect(status().isBadRequest());
 
@@ -225,7 +202,7 @@ public class UnidadeNegociosResourceIT {
         // Create the UnidadeNegocios, which fails.
 
         restUnidadeNegociosMockMvc.perform(post("/api/unidade-negocios")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(unidadeNegocios)))
             .andExpect(status().isBadRequest());
 
@@ -242,7 +219,7 @@ public class UnidadeNegociosResourceIT {
         // Get all the unidadeNegociosList
         restUnidadeNegociosMockMvc.perform(get("/api/unidade-negocios?sort=id,desc"))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(unidadeNegocios.getId().intValue())))
             .andExpect(jsonPath("$.[*].razaoSocial").value(hasItem(DEFAULT_RAZAO_SOCIAL)))
             .andExpect(jsonPath("$.[*].nomeEmpresa").value(hasItem(DEFAULT_NOME_EMPRESA)))
@@ -260,7 +237,7 @@ public class UnidadeNegociosResourceIT {
         // Get the unidadeNegocios
         restUnidadeNegociosMockMvc.perform(get("/api/unidade-negocios/{id}", unidadeNegocios.getId()))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(unidadeNegocios.getId().intValue()))
             .andExpect(jsonPath("$.razaoSocial").value(DEFAULT_RAZAO_SOCIAL))
             .andExpect(jsonPath("$.nomeEmpresa").value(DEFAULT_NOME_EMPRESA))
@@ -297,7 +274,7 @@ public class UnidadeNegociosResourceIT {
             .empregadora(UPDATED_EMPREGADORA);
 
         restUnidadeNegociosMockMvc.perform(put("/api/unidade-negocios")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(updatedUnidadeNegocios)))
             .andExpect(status().isOk());
 
@@ -324,7 +301,7 @@ public class UnidadeNegociosResourceIT {
 
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restUnidadeNegociosMockMvc.perform(put("/api/unidade-negocios")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(unidadeNegocios)))
             .andExpect(status().isBadRequest());
 
@@ -346,7 +323,7 @@ public class UnidadeNegociosResourceIT {
 
         // Delete the unidadeNegocios
         restUnidadeNegociosMockMvc.perform(delete("/api/unidade-negocios/{id}", unidadeNegocios.getId())
-            .accept(TestUtil.APPLICATION_JSON_UTF8))
+            .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNoContent());
 
         // Validate the database contains one less item
@@ -367,7 +344,7 @@ public class UnidadeNegociosResourceIT {
         // Search the unidadeNegocios
         restUnidadeNegociosMockMvc.perform(get("/api/_search/unidade-negocios?query=id:" + unidadeNegocios.getId()))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(unidadeNegocios.getId().intValue())))
             .andExpect(jsonPath("$.[*].razaoSocial").value(hasItem(DEFAULT_RAZAO_SOCIAL)))
             .andExpect(jsonPath("$.[*].nomeEmpresa").value(hasItem(DEFAULT_NOME_EMPRESA)))

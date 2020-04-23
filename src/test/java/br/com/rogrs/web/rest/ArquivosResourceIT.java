@@ -4,30 +4,27 @@ import br.com.rogrs.AgamottoApp;
 import br.com.rogrs.domain.Arquivos;
 import br.com.rogrs.repository.ArquivosRepository;
 import br.com.rogrs.repository.search.ArquivosSearchRepository;
-import br.com.rogrs.web.rest.errors.ExceptionTranslator;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.MockitoAnnotations;
+import org.mockito.Mock;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.Validator;
-
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Collections;
 import java.util.List;
 
-import static br.com.rogrs.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 import static org.hamcrest.Matchers.hasItem;
@@ -40,6 +37,9 @@ import br.com.rogrs.domain.enumeration.StatusArquivo;
  * Integration tests for the {@link ArquivosResource} REST controller.
  */
 @SpringBootTest(classes = AgamottoApp.class)
+@ExtendWith(MockitoExtension.class)
+@AutoConfigureMockMvc
+@WithMockUser
 public class ArquivosResourceIT {
 
     private static final String DEFAULT_NOME = "AAAAAAAAAA";
@@ -78,35 +78,12 @@ public class ArquivosResourceIT {
     private ArquivosSearchRepository mockArquivosSearchRepository;
 
     @Autowired
-    private MappingJackson2HttpMessageConverter jacksonMessageConverter;
-
-    @Autowired
-    private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
-
-    @Autowired
-    private ExceptionTranslator exceptionTranslator;
-
-    @Autowired
     private EntityManager em;
 
     @Autowired
-    private Validator validator;
-
     private MockMvc restArquivosMockMvc;
 
     private Arquivos arquivos;
-
-    @BeforeEach
-    public void setup() {
-        MockitoAnnotations.initMocks(this);
-        final ArquivosResource arquivosResource = new ArquivosResource(arquivosRepository, mockArquivosSearchRepository);
-        this.restArquivosMockMvc = MockMvcBuilders.standaloneSetup(arquivosResource)
-            .setCustomArgumentResolvers(pageableArgumentResolver)
-            .setControllerAdvice(exceptionTranslator)
-            .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter)
-            .setValidator(validator).build();
-    }
 
     /**
      * Create an entity for this test.
@@ -157,7 +134,7 @@ public class ArquivosResourceIT {
 
         // Create the Arquivos
         restArquivosMockMvc.perform(post("/api/arquivos")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(arquivos)))
             .andExpect(status().isCreated());
 
@@ -188,7 +165,7 @@ public class ArquivosResourceIT {
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restArquivosMockMvc.perform(post("/api/arquivos")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(arquivos)))
             .andExpect(status().isBadRequest());
 
@@ -211,7 +188,7 @@ public class ArquivosResourceIT {
         // Create the Arquivos, which fails.
 
         restArquivosMockMvc.perform(post("/api/arquivos")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(arquivos)))
             .andExpect(status().isBadRequest());
 
@@ -229,7 +206,7 @@ public class ArquivosResourceIT {
         // Create the Arquivos, which fails.
 
         restArquivosMockMvc.perform(post("/api/arquivos")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(arquivos)))
             .andExpect(status().isBadRequest());
 
@@ -247,7 +224,7 @@ public class ArquivosResourceIT {
         // Create the Arquivos, which fails.
 
         restArquivosMockMvc.perform(post("/api/arquivos")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(arquivos)))
             .andExpect(status().isBadRequest());
 
@@ -264,7 +241,7 @@ public class ArquivosResourceIT {
         // Get all the arquivosList
         restArquivosMockMvc.perform(get("/api/arquivos?sort=id,desc"))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(arquivos.getId().intValue())))
             .andExpect(jsonPath("$.[*].nome").value(hasItem(DEFAULT_NOME)))
             .andExpect(jsonPath("$.[*].caminho").value(hasItem(DEFAULT_CAMINHO)))
@@ -285,7 +262,7 @@ public class ArquivosResourceIT {
         // Get the arquivos
         restArquivosMockMvc.perform(get("/api/arquivos/{id}", arquivos.getId()))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(arquivos.getId().intValue()))
             .andExpect(jsonPath("$.nome").value(DEFAULT_NOME))
             .andExpect(jsonPath("$.caminho").value(DEFAULT_CAMINHO))
@@ -328,7 +305,7 @@ public class ArquivosResourceIT {
             .processamento(UPDATED_PROCESSAMENTO);
 
         restArquivosMockMvc.perform(put("/api/arquivos")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(updatedArquivos)))
             .andExpect(status().isOk());
 
@@ -358,7 +335,7 @@ public class ArquivosResourceIT {
 
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restArquivosMockMvc.perform(put("/api/arquivos")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(arquivos)))
             .andExpect(status().isBadRequest());
 
@@ -380,7 +357,7 @@ public class ArquivosResourceIT {
 
         // Delete the arquivos
         restArquivosMockMvc.perform(delete("/api/arquivos/{id}", arquivos.getId())
-            .accept(TestUtil.APPLICATION_JSON_UTF8))
+            .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNoContent());
 
         // Validate the database contains one less item
@@ -401,7 +378,7 @@ public class ArquivosResourceIT {
         // Search the arquivos
         restArquivosMockMvc.perform(get("/api/_search/arquivos?query=id:" + arquivos.getId()))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(arquivos.getId().intValue())))
             .andExpect(jsonPath("$.[*].nome").value(hasItem(DEFAULT_NOME)))
             .andExpect(jsonPath("$.[*].caminho").value(hasItem(DEFAULT_CAMINHO)))

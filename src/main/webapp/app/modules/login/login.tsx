@@ -23,7 +23,7 @@ export const Login = (props: ILoginProps) => {
   };
 
   const { location, isAuthenticated } = props;
-  const { from } = location.state || { from: { pathname: '/', search: location.search } };
+  const { from } = (location.state as any) || { from: { pathname: '/', search: location.search } };
   if (isAuthenticated) {
     return <Redirect to={from} />;
   }
@@ -41,7 +41,4 @@ const mapDispatchToProps = { login };
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

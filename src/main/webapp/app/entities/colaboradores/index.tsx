@@ -11,12 +11,12 @@ import ColaboradoresDeleteDialog from './colaboradores-delete-dialog';
 const Routes = ({ match }) => (
   <>
     <Switch>
+      <ErrorBoundaryRoute exact path={`${match.url}/:id/delete`} component={ColaboradoresDeleteDialog} />
       <ErrorBoundaryRoute exact path={`${match.url}/new`} component={ColaboradoresUpdate} />
       <ErrorBoundaryRoute exact path={`${match.url}/:id/edit`} component={ColaboradoresUpdate} />
       <ErrorBoundaryRoute exact path={`${match.url}/:id`} component={ColaboradoresDetail} />
       <ErrorBoundaryRoute path={match.url} component={Colaboradores} />
     </Switch>
-    <ErrorBoundaryRoute path={`${match.url}/:id/delete`} component={ColaboradoresDeleteDialog} />
   </>
 );
 

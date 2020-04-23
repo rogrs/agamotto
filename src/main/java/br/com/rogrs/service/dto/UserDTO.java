@@ -5,9 +5,6 @@ import br.com.rogrs.config.Constants;
 import br.com.rogrs.domain.Authority;
 import br.com.rogrs.domain.User;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-
 import javax.validation.constraints.*;
 import java.time.Instant;
 import java.util.Set;

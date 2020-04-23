@@ -11,12 +11,12 @@ import CargosDeleteDialog from './cargos-delete-dialog';
 const Routes = ({ match }) => (
   <>
     <Switch>
+      <ErrorBoundaryRoute exact path={`${match.url}/:id/delete`} component={CargosDeleteDialog} />
       <ErrorBoundaryRoute exact path={`${match.url}/new`} component={CargosUpdate} />
       <ErrorBoundaryRoute exact path={`${match.url}/:id/edit`} component={CargosUpdate} />
       <ErrorBoundaryRoute exact path={`${match.url}/:id`} component={CargosDetail} />
       <ErrorBoundaryRoute path={match.url} component={Cargos} />
     </Switch>
-    <ErrorBoundaryRoute path={`${match.url}/:id/delete`} component={CargosDeleteDialog} />
   </>
 );
 

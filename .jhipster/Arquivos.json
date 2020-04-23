@@ -52,7 +52,7 @@
             "relationshipName": "linhas"
         }
     ],
-    "changelogDate": "20191204030848",
+    "changelogDate": "20200423165500",
     "entityTableName": "arquivos",
     "dto": "no",
     "pagination": "infinite-scroll",
@@ -60,6 +60,7 @@
     "jpaMetamodelFiltering": false,
     "fluentMethods": true,
     "readOnly": false,
+    "embedded": false,
     "clientRootFolder": "",
     "applications": "*"
 }

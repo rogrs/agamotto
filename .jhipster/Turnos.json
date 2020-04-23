@@ -18,7 +18,7 @@
         }
     ],
     "relationships": [],
-    "changelogDate": "20191204030846",
+    "changelogDate": "20200423165300",
     "entityTableName": "turnos",
     "dto": "no",
     "pagination": "no",
@@ -26,6 +26,7 @@
     "jpaMetamodelFiltering": false,
     "fluentMethods": true,
     "readOnly": false,
+    "embedded": false,
     "clientRootFolder": "",
     "applications": "*"
 }

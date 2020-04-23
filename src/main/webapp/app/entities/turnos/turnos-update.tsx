@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col, Label } from 'reactstrap';
@@ -9,133 +9,120 @@ import { IRootState } from 'app/shared/reducers';
 
 import { getEntity, updateEntity, createEntity, reset } from './turnos.reducer';
 import { ITurnos } from 'app/shared/model/turnos.model';
-import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
+import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
 
 export interface ITurnosUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
-export interface ITurnosUpdateState {
-  isNew: boolean;
-}
+export const TurnosUpdate = (props: ITurnosUpdateProps) => {
+  const [isNew, setIsNew] = useState(!props.match.params || !props.match.params.id);
 
-export class TurnosUpdate extends React.Component<ITurnosUpdateProps, ITurnosUpdateState> {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isNew: !this.props.match.params || !this.props.match.params.id
-    };
-  }
+  const { turnosEntity, loading, updating } = props;
 
-  componentWillUpdate(nextProps, nextState) {
-    if (nextProps.updateSuccess !== this.props.updateSuccess && nextProps.updateSuccess) {
-      this.handleClose();
-    }
-  }
+  const handleClose = () => {
+    props.history.push('/turnos');
+  };
 
-  componentDidMount() {
-    if (this.state.isNew) {
-      this.props.reset();
+  useEffect(() => {
+    if (isNew) {
+      props.reset();
     } else {
-      this.props.getEntity(this.props.match.params.id);
+      props.getEntity(props.match.params.id);
     }
-  }
+  }, []);
 
-  saveEntity = (event, errors, values) => {
+  useEffect(() => {
+    if (props.updateSuccess) {
+      handleClose();
+    }
+  }, [props.updateSuccess]);
+
+  const saveEntity = (event, errors, values) => {
     if (errors.length === 0) {
-      const { turnosEntity } = this.props;
       const entity = {
         ...turnosEntity,
         ...values
       };
 
-      if (this.state.isNew) {
-        this.props.createEntity(entity);
+      if (isNew) {
+        props.createEntity(entity);
       } else {
-        this.props.updateEntity(entity);
+        props.updateEntity(entity);
       }
     }
   };
 
-  handleClose = () => {
-    this.props.history.push('/turnos');
-  };
-
-  render() {
-    const { turnosEntity, loading, updating } = this.props;
-    const { isNew } = this.state;
-
-    return (
-      <div>
-        <Row className="justify-content-center">
-          <Col md="8">
-            <h2 id="agamottoApp.turnos.home.createOrEditLabel">
-              <Translate contentKey="agamottoApp.turnos.home.createOrEditLabel">Create or edit a Turnos</Translate>
-            </h2>
-          </Col>
-        </Row>
-        <Row className="justify-content-center">
-          <Col md="8">
-            {loading ? (
-              <p>Loading...</p>
-            ) : (
-              <AvForm model={isNew ? {} : turnosEntity} onSubmit={this.saveEntity}>
-                {!isNew ? (
-                  <AvGroup>
-                    <Label for="turnos-id">
-                      <Translate contentKey="global.field.id">ID</Translate>
-                    </Label>
-                    <AvInput id="turnos-id" type="text" className="form-control" name="id" required readOnly />
-                  </AvGroup>
-                ) : null}
+  return (
+    <div>
+      <Row className="justify-content-center">
+        <Col md="8">
+          <h2 id="agamottoApp.turnos.home.createOrEditLabel">
+            <Translate contentKey="agamottoApp.turnos.home.createOrEditLabel">Create or edit a Turnos</Translate>
+          </h2>
+        </Col>
+      </Row>
+      <Row className="justify-content-center">
+        <Col md="8">
+          {loading ? (
+            <p>Loading...</p>
+          ) : (
+            <AvForm model={isNew ? {} : turnosEntity} onSubmit={saveEntity}>
+              {!isNew ? (
                 <AvGroup>
-                  <Label id="descricaoTurnoLabel" for="turnos-descricaoTurno">
-                    <Translate contentKey="agamottoApp.turnos.descricaoTurno">Descricao Turno</Translate>
+                  <Label for="turnos-id">
+                    <Translate contentKey="global.field.id">ID</Translate>
                   </Label>
-                  <AvField
-                    id="turnos-descricaoTurno"
-                    type="text"
-                    name="descricaoTurno"
-                    validate={{
-                      required: { value: true, errorMessage: translate('entity.validation.required') }
-                    }}
-                  />
+                  <AvInput id="turnos-id" type="text" className="form-control" name="id" required readOnly />
                 </AvGroup>
-                <AvGroup>
-                  <Label id="intervaloFlexivelLabel" for="turnos-intervaloFlexivel">
-                    <Translate contentKey="agamottoApp.turnos.intervaloFlexivel">Intervalo Flexivel</Translate>
-                  </Label>
-                  <AvInput
-                    id="turnos-intervaloFlexivel"
-                    type="select"
-                    className="form-control"
-                    name="intervaloFlexivel"
-                    value={(!isNew && turnosEntity.intervaloFlexivel) || 'SIM'}
-                  >
-                    <option value="SIM">{translate('agamottoApp.TipoBoolean.SIM')}</option>
-                    <option value="NAO">{translate('agamottoApp.TipoBoolean.NAO')}</option>
-                  </AvInput>
-                </AvGroup>
-                <Button tag={Link} id="cancel-save" to="/turnos" replace color="info">
-                  <FontAwesomeIcon icon="arrow-left" />
-                  &nbsp;
-                  <span className="d-none d-md-inline">
-                    <Translate contentKey="entity.action.back">Back</Translate>
-                  </span>
-                </Button>
+              ) : null}
+              <AvGroup>
+                <Label id="descricaoTurnoLabel" for="turnos-descricaoTurno">
+                  <Translate contentKey="agamottoApp.turnos.descricaoTurno">Descricao Turno</Translate>
+                </Label>
+                <AvField
+                  id="turnos-descricaoTurno"
+                  type="text"
+                  name="descricaoTurno"
+                  validate={{
+                    required: { value: true, errorMessage: translate('entity.validation.required') }
+                  }}
+                />
+              </AvGroup>
+              <AvGroup>
+                <Label id="intervaloFlexivelLabel" for="turnos-intervaloFlexivel">
+                  <Translate contentKey="agamottoApp.turnos.intervaloFlexivel">Intervalo Flexivel</Translate>
+                </Label>
+                <AvInput
+                  id="turnos-intervaloFlexivel"
+                  type="select"
+                  className="form-control"
+                  name="intervaloFlexivel"
+                  value={(!isNew && turnosEntity.intervaloFlexivel) || 'SIM'}
+                >
+                  <option value="SIM">{translate('agamottoApp.TipoBoolean.SIM')}</option>
+                  <option value="NAO">{translate('agamottoApp.TipoBoolean.NAO')}</option>
+                </AvInput>
+              </AvGroup>
+              <Button tag={Link} id="cancel-save" to="/turnos" replace color="info">
+                <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;
-                <Button color="primary" id="save-entity" type="submit" disabled={updating}>
-                  <FontAwesomeIcon icon="save" />
-                  &nbsp;
-                  <Translate contentKey="entity.action.save">Save</Translate>
-                </Button>
-              </AvForm>
-            )}
-          </Col>
-        </Row>
-      </div>
-    );
-  }
-}
+                <span className="d-none d-md-inline">
+                  <Translate contentKey="entity.action.back">Back</Translate>
+                </span>
+              </Button>
+              &nbsp;
+              <Button color="primary" id="save-entity" type="submit" disabled={updating}>
+                <FontAwesomeIcon icon="save" />
+                &nbsp;
+                <Translate contentKey="entity.action.save">Save</Translate>
+              </Button>
+            </AvForm>
+          )}
+        </Col>
+      </Row>
+    </div>
+  );
+};
 
 const mapStateToProps = (storeState: IRootState) => ({
   turnosEntity: storeState.turnos.entity,
@@ -154,7 +141,4 @@ const mapDispatchToProps = {
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(TurnosUpdate);
+export default connect(mapStateToProps, mapDispatchToProps)(TurnosUpdate);

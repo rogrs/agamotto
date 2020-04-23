@@ -282,13 +282,6 @@ describe('Entities reducer tests', () => {
         {
           type: SUCCESS(ACTION_TYPES.UPDATE_UNIDADENEGOCIOS),
           payload: resolvedObject
-        },
-        {
-          type: REQUEST(ACTION_TYPES.FETCH_UNIDADENEGOCIOS_LIST)
-        },
-        {
-          type: SUCCESS(ACTION_TYPES.FETCH_UNIDADENEGOCIOS_LIST),
-          payload: resolvedObject
         }
       ];
       await store.dispatch(updateEntity({ id: 1 })).then(() => expect(store.getActions()).toEqual(expectedActions));
@@ -301,13 +294,6 @@ describe('Entities reducer tests', () => {
         },
         {
           type: SUCCESS(ACTION_TYPES.DELETE_UNIDADENEGOCIOS),
-          payload: resolvedObject
-        },
-        {
-          type: REQUEST(ACTION_TYPES.FETCH_UNIDADENEGOCIOS_LIST)
-        },
-        {
-          type: SUCCESS(ACTION_TYPES.FETCH_UNIDADENEGOCIOS_LIST),
           payload: resolvedObject
         }
       ];

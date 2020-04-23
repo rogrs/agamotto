@@ -3,32 +3,35 @@
     xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
     xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd
                         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
     
     <!--
-        Added the entity Ponto.
+        Added the entity Feriados.
     -->
-    <changeSet id="20191204030851-1" author="jhipster">
-        <createTable tableName="ponto">
-            <column name="id" type="bigint" autoIncrement="${autoIncrement}">
+    <changeSet id="20200423164900-1" author="jhipster">
+        <createTable tableName="feriados">
+            <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="marcacao" type="bigint">
+            <column name="nome" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
-            <column name="motivo" type="varchar(255)">
+            <column name="fixo_ou_muda_todo_ano" type="boolean">
                 <constraints nullable="false" />
             </column>
-            <column name="controle_ponto_id" type="bigint">
+            <column name="data_feriado" type="date">
+                <constraints nullable="false" />
+            </column>
+            <column name="unidade_negocios_id" type="bigint">
                 <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
     </changeSet>
 
-    <changeSet id="20191204030851-1-relations" author="jhipster">
+    <changeSet id="20200423164900-1-relations" author="jhipster">
 
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
@@ -41,14 +44,15 @@
           This can be customized by adding or removing 'faker' in the 'spring.liquibase.contexts'
           Spring Boot configuration key.
     -->
-    <changeSet id="20191204030851-1-data" author="jhipster" context="faker">
+    <changeSet id="20200423164900-1-data" author="jhipster" context="faker">
         <loadData
-                  file="config/liquibase/fake-data/ponto.csv"
+                  file="config/liquibase/fake-data/feriados.csv"
                   separator=";"
-                  tableName="ponto">
+                  tableName="feriados">
             <column name="id" type="numeric"/>
-            <column name="marcacao" type="numeric"/>
-            <column name="motivo" type="string"/>
+            <column name="nome" type="string"/>
+            <column name="fixo_ou_muda_todo_ano" type="boolean"/>
+            <column name="data_feriado" type="date"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here, do not remove-->
         </loadData>
     </changeSet>

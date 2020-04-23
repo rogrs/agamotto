@@ -72,7 +72,7 @@
             "relationshipName": "controlePonto"
         }
     ],
-    "changelogDate": "20191204030847",
+    "changelogDate": "20200423165400",
     "entityTableName": "colaboradores",
     "dto": "no",
     "pagination": "infinite-scroll",
@@ -80,6 +80,7 @@
     "jpaMetamodelFiltering": false,
     "fluentMethods": true,
     "readOnly": false,
+    "embedded": false,
     "clientRootFolder": "",
     "applications": "*"
 }

@@ -11,12 +11,12 @@ import FeriadosDeleteDialog from './feriados-delete-dialog';
 const Routes = ({ match }) => (
   <>
     <Switch>
+      <ErrorBoundaryRoute exact path={`${match.url}/:id/delete`} component={FeriadosDeleteDialog} />
       <ErrorBoundaryRoute exact path={`${match.url}/new`} component={FeriadosUpdate} />
       <ErrorBoundaryRoute exact path={`${match.url}/:id/edit`} component={FeriadosUpdate} />
       <ErrorBoundaryRoute exact path={`${match.url}/:id`} component={FeriadosDetail} />
       <ErrorBoundaryRoute path={match.url} component={Feriados} />
     </Switch>
-    <ErrorBoundaryRoute path={`${match.url}/:id/delete`} component={FeriadosDeleteDialog} />
   </>
 );
 

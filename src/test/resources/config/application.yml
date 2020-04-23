@@ -24,9 +24,11 @@ spring:
     password:
     hikari:
       auto-commit: false
+  jackson:
+    serialization:
+      write-durations-as-timestamps: false
   jpa:
     database-platform: io.github.jhipster.domain.util.FixedH2Dialect
-    database: H2
     open-in-view: false
     show-sql: false
     hibernate:
@@ -47,9 +49,6 @@ spring:
       properties:
         path:
           home: build/elasticsearch
-        # See https://github.com/jhipster/generator-jhipster/issues/10302
-        node:
-          max_local_storage_nodes: 2
   liquibase:
     contexts: test
   mail:
@@ -103,7 +102,7 @@ jhipster:
     authentication:
       jwt:
         # This token must be encoded using Base64 (you can type `echo 'secret-key'|base64` on your command line)
-        base64-secret: YmY5ODA1ODJhZTJhYWFlMWJiZTBkZTIxZDliODc4ZTMyZWYxZGIyM2YwYjIxYTJmOWM3OTY3MjRiNzNiNWJlOTYwZDFhYjEyM2E2ZmNiMTkxNjI5NWE2NjkwZTdhNDkyNGI2OTlmNTRhY2FiMDU1NTQ2NDg4YzkyYTMwZjcxMjE=
+        base64-secret: YmRiNWYwNzE0NzVkYTIxYTkxNTAyOTU2NzQ5ZWM4MzFjNTFkN2EzY2Q2NDYxNWJhMDJjYTIzMWY3OGJjNDdiZWM4NzVhZTcxZGE4YTNlMWU3ZWY2ZjMxNjk4YzIwZTc0ZTc3MDdjODUxNzc5Y2ZmYTc1Mjc5ZTM4MzEyMjQzZmU=
         # Token is valid 24 hours
         token-validity-in-seconds: 86400
   metrics:

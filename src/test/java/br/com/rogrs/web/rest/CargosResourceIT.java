@@ -4,26 +4,23 @@ import br.com.rogrs.AgamottoApp;
 import br.com.rogrs.domain.Cargos;
 import br.com.rogrs.repository.CargosRepository;
 import br.com.rogrs.repository.search.CargosSearchRepository;
-import br.com.rogrs.web.rest.errors.ExceptionTranslator;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.MockitoAnnotations;
+import org.mockito.Mock;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.Validator;
-
 import javax.persistence.EntityManager;
 import java.util.Collections;
 import java.util.List;
 
-import static br.com.rogrs.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 import static org.hamcrest.Matchers.hasItem;
@@ -35,6 +32,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Integration tests for the {@link CargosResource} REST controller.
  */
 @SpringBootTest(classes = AgamottoApp.class)
+@ExtendWith(MockitoExtension.class)
+@AutoConfigureMockMvc
+@WithMockUser
 public class CargosResourceIT {
 
     private static final String DEFAULT_NOME = "AAAAAAAAAA";
@@ -52,35 +52,12 @@ public class CargosResourceIT {
     private CargosSearchRepository mockCargosSearchRepository;
 
     @Autowired
-    private MappingJackson2HttpMessageConverter jacksonMessageConverter;
-
-    @Autowired
-    private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
-
-    @Autowired
-    private ExceptionTranslator exceptionTranslator;
-
-    @Autowired
     private EntityManager em;
 
     @Autowired
-    private Validator validator;
-
     private MockMvc restCargosMockMvc;
 
     private Cargos cargos;
-
-    @BeforeEach
-    public void setup() {
-        MockitoAnnotations.initMocks(this);
-        final CargosResource cargosResource = new CargosResource(cargosRepository, mockCargosSearchRepository);
-        this.restCargosMockMvc = MockMvcBuilders.standaloneSetup(cargosResource)
-            .setCustomArgumentResolvers(pageableArgumentResolver)
-            .setControllerAdvice(exceptionTranslator)
-            .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter)
-            .setValidator(validator).build();
-    }
 
     /**
      * Create an entity for this test.
@@ -117,7 +94,7 @@ public class CargosResourceIT {
 
         // Create the Cargos
         restCargosMockMvc.perform(post("/api/cargos")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(cargos)))
             .andExpect(status().isCreated());
 
@@ -141,7 +118,7 @@ public class CargosResourceIT {
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restCargosMockMvc.perform(post("/api/cargos")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(cargos)))
             .andExpect(status().isBadRequest());
 
@@ -164,7 +141,7 @@ public class CargosResourceIT {
         // Create the Cargos, which fails.
 
         restCargosMockMvc.perform(post("/api/cargos")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(cargos)))
             .andExpect(status().isBadRequest());
 
@@ -181,7 +158,7 @@ public class CargosResourceIT {
         // Get all the cargosList
         restCargosMockMvc.perform(get("/api/cargos?sort=id,desc"))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(cargos.getId().intValue())))
             .andExpect(jsonPath("$.[*].nome").value(hasItem(DEFAULT_NOME)));
     }
@@ -195,7 +172,7 @@ public class CargosResourceIT {
         // Get the cargos
         restCargosMockMvc.perform(get("/api/cargos/{id}", cargos.getId()))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(cargos.getId().intValue()))
             .andExpect(jsonPath("$.nome").value(DEFAULT_NOME));
     }
@@ -224,7 +201,7 @@ public class CargosResourceIT {
             .nome(UPDATED_NOME);
 
         restCargosMockMvc.perform(put("/api/cargos")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(updatedCargos)))
             .andExpect(status().isOk());
 
@@ -247,7 +224,7 @@ public class CargosResourceIT {
 
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restCargosMockMvc.perform(put("/api/cargos")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(cargos)))
             .andExpect(status().isBadRequest());
 
@@ -269,7 +246,7 @@ public class CargosResourceIT {
 
         // Delete the cargos
         restCargosMockMvc.perform(delete("/api/cargos/{id}", cargos.getId())
-            .accept(TestUtil.APPLICATION_JSON_UTF8))
+            .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNoContent());
 
         // Validate the database contains one less item
@@ -290,7 +267,7 @@ public class CargosResourceIT {
         // Search the cargos
         restCargosMockMvc.perform(get("/api/_search/cargos?query=id:" + cargos.getId()))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(cargos.getId().intValue())))
             .andExpect(jsonPath("$.[*].nome").value(hasItem(DEFAULT_NOME)));
     }

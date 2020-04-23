@@ -11,12 +11,12 @@ import EquipesDeleteDialog from './equipes-delete-dialog';
 const Routes = ({ match }) => (
   <>
     <Switch>
+      <ErrorBoundaryRoute exact path={`${match.url}/:id/delete`} component={EquipesDeleteDialog} />
       <ErrorBoundaryRoute exact path={`${match.url}/new`} component={EquipesUpdate} />
       <ErrorBoundaryRoute exact path={`${match.url}/:id/edit`} component={EquipesUpdate} />
       <ErrorBoundaryRoute exact path={`${match.url}/:id`} component={EquipesDetail} />
       <ErrorBoundaryRoute path={match.url} component={Equipes} />
     </Switch>
-    <ErrorBoundaryRoute path={`${match.url}/:id/delete`} component={EquipesDeleteDialog} />
   </>
 );
 

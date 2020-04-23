@@ -46,7 +46,7 @@
             "relationshipName": "departamentos"
         }
     ],
-    "changelogDate": "20191204030841",
+    "changelogDate": "20200423164800",
     "entityTableName": "unidade_negocios",
     "dto": "no",
     "pagination": "no",
@@ -54,6 +54,7 @@
     "jpaMetamodelFiltering": false,
     "fluentMethods": true,
     "readOnly": false,
+    "embedded": false,
     "clientRootFolder": "",
     "applications": "*"
 }

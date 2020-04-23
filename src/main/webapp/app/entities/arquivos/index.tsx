@@ -11,12 +11,12 @@ import ArquivosDeleteDialog from './arquivos-delete-dialog';
 const Routes = ({ match }) => (
   <>
     <Switch>
+      <ErrorBoundaryRoute exact path={`${match.url}/:id/delete`} component={ArquivosDeleteDialog} />
       <ErrorBoundaryRoute exact path={`${match.url}/new`} component={ArquivosUpdate} />
       <ErrorBoundaryRoute exact path={`${match.url}/:id/edit`} component={ArquivosUpdate} />
       <ErrorBoundaryRoute exact path={`${match.url}/:id`} component={ArquivosDetail} />
       <ErrorBoundaryRoute path={match.url} component={Arquivos} />
     </Switch>
-    <ErrorBoundaryRoute path={`${match.url}/:id/delete`} component={ArquivosDeleteDialog} />
   </>
 );
 

@@ -1,4 +1,5 @@
 package br.com.rogrs.repository.search;
+
 import br.com.rogrs.domain.Ponto;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 

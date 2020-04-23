@@ -40,21 +40,8 @@ spring:
       poolName: Hikari
       auto-commit: false
   jpa:
-    database-platform: io.github.jhipster.domain.util.FixedPostgreSQL95Dialect
-    database: POSTGRESQL
+    database-platform: io.github.jhipster.domain.util.FixedPostgreSQL10Dialect
     show-sql: false
-    properties:
-      hibernate.id.new_generator_mappings: true
-      hibernate.connection.provider_disables_autocommit: true
-      hibernate.cache.use_second_level_cache: true
-      hibernate.cache.use_query_cache: false
-      hibernate.generate_statistics: false
-      # modify batch size as necessary
-      hibernate.jdbc.batch_size: 25
-      hibernate.order_inserts: true
-      hibernate.order_updates: true
-      hibernate.query.fail_on_pagination_over_collection_fetch: true
-      hibernate.query.in_clause_parameter_padding: true
   data:
     jest:
       uri: http://localhost:9200
@@ -121,7 +108,7 @@ jhipster:
         # - In the JHipster Registry (which includes a Spring Cloud Config server)
         # - In a separate `application-prod.yml` file, in the same folder as your executable JAR file
         # - In the `JHIPSTER_SECURITY_AUTHENTICATION_JWT_BASE64_SECRET` environment variable
-        base64-secret: YmY5ODA1ODJhZTJhYWFlMWJiZTBkZTIxZDliODc4ZTMyZWYxZGIyM2YwYjIxYTJmOWM3OTY3MjRiNzNiNWJlOTYwZDFhYjEyM2E2ZmNiMTkxNjI5NWE2NjkwZTdhNDkyNGI2OTlmNTRhY2FiMDU1NTQ2NDg4YzkyYTMwZjcxMjE=
+        base64-secret: YmRiNWYwNzE0NzVkYTIxYTkxNTAyOTU2NzQ5ZWM4MzFjNTFkN2EzY2Q2NDYxNWJhMDJjYTIzMWY3OGJjNDdiZWM4NzVhZTcxZGE4YTNlMWU3ZWY2ZjMxNjk4YzIwZTc0ZTc3MDdjODUxNzc5Y2ZmYTc1Mjc5ZTM4MzEyMjQzZmU=
         # Token is valid 24 hours
         token-validity-in-seconds: 86400
         token-validity-in-seconds-for-remember-me: 2592000

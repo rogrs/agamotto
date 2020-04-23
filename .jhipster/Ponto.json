@@ -26,7 +26,7 @@
             "otherEntityField": "id"
         }
     ],
-    "changelogDate": "20191204030851",
+    "changelogDate": "20200423165800",
     "entityTableName": "ponto",
     "dto": "no",
     "pagination": "no",
@@ -34,6 +34,7 @@
     "jpaMetamodelFiltering": false,
     "fluentMethods": true,
     "readOnly": false,
+    "embedded": false,
     "clientRootFolder": "",
     "applications": "*"
 }

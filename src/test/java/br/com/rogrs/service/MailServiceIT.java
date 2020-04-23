@@ -43,7 +43,7 @@ import static org.mockito.Mockito.*;
 @SpringBootTest(classes = AgamottoApp.class)
 public class MailServiceIT {
 
-    private static String languages[] = {
+    private static final String[] languages = {
         "en",
         "pt-br",
         "es"
@@ -198,9 +198,13 @@ public class MailServiceIT {
     }
 
     @Test
-    public void testSendEmailWithException() throws Exception {
+    public void testSendEmailWithException() {
         doThrow(MailSendException.class).when(javaMailSender).send(any(MimeMessage.class));
-        mailService.sendEmail("john.doe@example.com", "testSubject", "testContent", false, false);
+        try {
+            mailService.sendEmail("john.doe@example.com", "testSubject", "testContent", false, false);
+        } catch (Exception e) {
+            fail("Exception shouldn't have been thrown");
+        }
     }
 
     @Test

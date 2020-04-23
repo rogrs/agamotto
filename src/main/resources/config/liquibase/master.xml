@@ -2,7 +2,7 @@
 <databaseChangeLog
     xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
     <property name="now" value="now()" dbms="h2"/>
     <property name="now" value="current_timestamp" dbms="postgresql"/>
@@ -14,24 +14,24 @@
     <property name="uuidType" value="uuid" dbms="h2, postgresql"/>
 
     <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20191204030841_added_entity_UnidadeNegocios.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20191204030842_added_entity_Feriados.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20191204030843_added_entity_Departamentos.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20191204030844_added_entity_Equipes.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20191204030845_added_entity_Cargos.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20191204030846_added_entity_Turnos.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20191204030847_added_entity_Colaboradores.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20191204030848_added_entity_Arquivos.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20191204030849_added_entity_LinhasArquivos.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20191204030850_added_entity_ControlePonto.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20191204030851_added_entity_Ponto.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200423164800_added_entity_UnidadeNegocios.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200423164900_added_entity_Feriados.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200423165000_added_entity_Departamentos.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200423165100_added_entity_Equipes.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200423165200_added_entity_Cargos.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200423165300_added_entity_Turnos.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200423165400_added_entity_Colaboradores.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200423165500_added_entity_Arquivos.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200423165600_added_entity_LinhasArquivos.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200423165700_added_entity_ControlePonto.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200423165800_added_entity_Ponto.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
-    <include file="config/liquibase/changelog/20191204030842_added_entity_constraints_Feriados.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20191204030843_added_entity_constraints_Departamentos.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20191204030844_added_entity_constraints_Equipes.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20191204030845_added_entity_constraints_Cargos.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20191204030849_added_entity_constraints_LinhasArquivos.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20191204030850_added_entity_constraints_ControlePonto.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20191204030851_added_entity_constraints_Ponto.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200423164900_added_entity_constraints_Feriados.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200423165000_added_entity_constraints_Departamentos.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200423165100_added_entity_constraints_Equipes.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200423165200_added_entity_constraints_Cargos.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200423165600_added_entity_constraints_LinhasArquivos.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200423165700_added_entity_constraints_ControlePonto.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200423165800_added_entity_constraints_Ponto.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>

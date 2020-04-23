@@ -17,7 +17,7 @@ export const UserManagementDeleteDialog = (props: IUserManagementDeleteDialogPro
 
   const handleClose = event => {
     event.stopPropagation();
-    props.history.goBack();
+    props.history.push('/admin/user-management');
   };
 
   const confirmDelete = event => {
@@ -62,7 +62,4 @@ const mapDispatchToProps = { getUser, deleteUser };
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(UserManagementDeleteDialog);
+export default connect(mapStateToProps, mapDispatchToProps)(UserManagementDeleteDialog);

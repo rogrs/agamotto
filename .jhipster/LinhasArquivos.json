@@ -57,7 +57,7 @@
             "otherEntityField": "nome"
         }
     ],
-    "changelogDate": "20191204030849",
+    "changelogDate": "20200423165600",
     "entityTableName": "linhas_arquivos",
     "dto": "no",
     "pagination": "infinite-scroll",
@@ -65,6 +65,7 @@
     "jpaMetamodelFiltering": false,
     "fluentMethods": true,
     "readOnly": false,
+    "embedded": false,
     "clientRootFolder": "",
     "applications": "*"
 }

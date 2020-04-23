@@ -34,7 +34,6 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
-    @org.springframework.data.elasticsearch.annotations.Field(type = FieldType.Keyword)
     private Long id;
 
     @NotNull
@@ -81,6 +80,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     @Size(max = 20)
     @Column(name = "reset_key", length = 20)
+
     @JsonIgnore
     private String resetKey;
 

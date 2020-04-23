@@ -13,6 +13,7 @@
     "indicator": {
       "diskSpace": "Espaço em disco",
       "mail": "E-mail",
+      "ping": "Application",
       "elasticsearch": "Elasticsearch",
       "db": "Banco de dados"
     },

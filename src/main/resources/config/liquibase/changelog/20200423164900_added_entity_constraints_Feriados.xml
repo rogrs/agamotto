@@ -2,15 +2,15 @@
 <databaseChangeLog
     xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
     <!--
-        Added the constraints for entity Departamentos.
+        Added the constraints for entity Feriados.
     -->
-    <changeSet id="20191204030843-2" author="jhipster">
+    <changeSet id="20200423164900-2" author="jhipster">
         
         <addForeignKeyConstraint baseColumnNames="unidade_negocios_id"
-                                 baseTableName="departamentos"
-                                 constraintName="fk_departamentos_unidade_negocios_id"
+                                 baseTableName="feriados"
+                                 constraintName="fk_feriados_unidade_negocios_id"
                                  referencedColumnNames="id"
                                  referencedTableName="unidade_negocios"/>
 

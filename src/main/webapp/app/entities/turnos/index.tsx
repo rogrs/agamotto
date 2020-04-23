@@ -11,12 +11,12 @@ import TurnosDeleteDialog from './turnos-delete-dialog';
 const Routes = ({ match }) => (
   <>
     <Switch>
+      <ErrorBoundaryRoute exact path={`${match.url}/:id/delete`} component={TurnosDeleteDialog} />
       <ErrorBoundaryRoute exact path={`${match.url}/new`} component={TurnosUpdate} />
       <ErrorBoundaryRoute exact path={`${match.url}/:id/edit`} component={TurnosUpdate} />
       <ErrorBoundaryRoute exact path={`${match.url}/:id`} component={TurnosDetail} />
       <ErrorBoundaryRoute path={match.url} component={Turnos} />
     </Switch>
-    <ErrorBoundaryRoute path={`${match.url}/:id/delete`} component={TurnosDeleteDialog} />
   </>
 );
 

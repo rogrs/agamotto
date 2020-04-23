@@ -4,27 +4,24 @@ import br.com.rogrs.AgamottoApp;
 import br.com.rogrs.domain.Ponto;
 import br.com.rogrs.repository.PontoRepository;
 import br.com.rogrs.repository.search.PontoSearchRepository;
-import br.com.rogrs.web.rest.errors.ExceptionTranslator;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.MockitoAnnotations;
+import org.mockito.Mock;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.Validator;
-
 import javax.persistence.EntityManager;
 import java.time.Duration;
 import java.util.Collections;
 import java.util.List;
 
-import static br.com.rogrs.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 import static org.hamcrest.Matchers.hasItem;
@@ -37,6 +34,9 @@ import br.com.rogrs.domain.enumeration.TipoMotivoAjuste;
  * Integration tests for the {@link PontoResource} REST controller.
  */
 @SpringBootTest(classes = AgamottoApp.class)
+@ExtendWith(MockitoExtension.class)
+@AutoConfigureMockMvc
+@WithMockUser
 public class PontoResourceIT {
 
     private static final Duration DEFAULT_MARCACAO = Duration.ofHours(6);
@@ -57,35 +57,12 @@ public class PontoResourceIT {
     private PontoSearchRepository mockPontoSearchRepository;
 
     @Autowired
-    private MappingJackson2HttpMessageConverter jacksonMessageConverter;
-
-    @Autowired
-    private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
-
-    @Autowired
-    private ExceptionTranslator exceptionTranslator;
-
-    @Autowired
     private EntityManager em;
 
     @Autowired
-    private Validator validator;
-
     private MockMvc restPontoMockMvc;
 
     private Ponto ponto;
-
-    @BeforeEach
-    public void setup() {
-        MockitoAnnotations.initMocks(this);
-        final PontoResource pontoResource = new PontoResource(pontoRepository, mockPontoSearchRepository);
-        this.restPontoMockMvc = MockMvcBuilders.standaloneSetup(pontoResource)
-            .setCustomArgumentResolvers(pageableArgumentResolver)
-            .setControllerAdvice(exceptionTranslator)
-            .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter)
-            .setValidator(validator).build();
-    }
 
     /**
      * Create an entity for this test.
@@ -124,7 +101,7 @@ public class PontoResourceIT {
 
         // Create the Ponto
         restPontoMockMvc.perform(post("/api/pontos")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(ponto)))
             .andExpect(status().isCreated());
 
@@ -149,7 +126,7 @@ public class PontoResourceIT {
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restPontoMockMvc.perform(post("/api/pontos")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(ponto)))
             .andExpect(status().isBadRequest());
 
@@ -172,7 +149,7 @@ public class PontoResourceIT {
         // Create the Ponto, which fails.
 
         restPontoMockMvc.perform(post("/api/pontos")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(ponto)))
             .andExpect(status().isBadRequest());
 
@@ -190,7 +167,7 @@ public class PontoResourceIT {
         // Create the Ponto, which fails.
 
         restPontoMockMvc.perform(post("/api/pontos")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(ponto)))
             .andExpect(status().isBadRequest());
 
@@ -207,7 +184,7 @@ public class PontoResourceIT {
         // Get all the pontoList
         restPontoMockMvc.perform(get("/api/pontos?sort=id,desc"))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(ponto.getId().intValue())))
             .andExpect(jsonPath("$.[*].marcacao").value(hasItem(DEFAULT_MARCACAO.toString())))
             .andExpect(jsonPath("$.[*].motivo").value(hasItem(DEFAULT_MOTIVO.toString())));
@@ -222,7 +199,7 @@ public class PontoResourceIT {
         // Get the ponto
         restPontoMockMvc.perform(get("/api/pontos/{id}", ponto.getId()))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(ponto.getId().intValue()))
             .andExpect(jsonPath("$.marcacao").value(DEFAULT_MARCACAO.toString()))
             .andExpect(jsonPath("$.motivo").value(DEFAULT_MOTIVO.toString()));
@@ -253,7 +230,7 @@ public class PontoResourceIT {
             .motivo(UPDATED_MOTIVO);
 
         restPontoMockMvc.perform(put("/api/pontos")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(updatedPonto)))
             .andExpect(status().isOk());
 
@@ -277,7 +254,7 @@ public class PontoResourceIT {
 
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restPontoMockMvc.perform(put("/api/pontos")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(ponto)))
             .andExpect(status().isBadRequest());
 
@@ -299,7 +276,7 @@ public class PontoResourceIT {
 
         // Delete the ponto
         restPontoMockMvc.perform(delete("/api/pontos/{id}", ponto.getId())
-            .accept(TestUtil.APPLICATION_JSON_UTF8))
+            .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNoContent());
 
         // Validate the database contains one less item
@@ -320,7 +297,7 @@ public class PontoResourceIT {
         // Search the ponto
         restPontoMockMvc.perform(get("/api/_search/pontos?query=id:" + ponto.getId()))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(ponto.getId().intValue())))
             .andExpect(jsonPath("$.[*].marcacao").value(hasItem(DEFAULT_MARCACAO.toString())))
             .andExpect(jsonPath("$.[*].motivo").value(hasItem(DEFAULT_MOTIVO.toString())));

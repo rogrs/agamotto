@@ -4,26 +4,23 @@ import br.com.rogrs.AgamottoApp;
 import br.com.rogrs.domain.Departamentos;
 import br.com.rogrs.repository.DepartamentosRepository;
 import br.com.rogrs.repository.search.DepartamentosSearchRepository;
-import br.com.rogrs.web.rest.errors.ExceptionTranslator;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.MockitoAnnotations;
+import org.mockito.Mock;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.Validator;
-
 import javax.persistence.EntityManager;
 import java.util.Collections;
 import java.util.List;
 
-import static br.com.rogrs.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 import static org.hamcrest.Matchers.hasItem;
@@ -35,6 +32,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Integration tests for the {@link DepartamentosResource} REST controller.
  */
 @SpringBootTest(classes = AgamottoApp.class)
+@ExtendWith(MockitoExtension.class)
+@AutoConfigureMockMvc
+@WithMockUser
 public class DepartamentosResourceIT {
 
     private static final String DEFAULT_NOME = "AAAAAAAAAA";
@@ -52,35 +52,12 @@ public class DepartamentosResourceIT {
     private DepartamentosSearchRepository mockDepartamentosSearchRepository;
 
     @Autowired
-    private MappingJackson2HttpMessageConverter jacksonMessageConverter;
-
-    @Autowired
-    private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
-
-    @Autowired
-    private ExceptionTranslator exceptionTranslator;
-
-    @Autowired
     private EntityManager em;
 
     @Autowired
-    private Validator validator;
-
     private MockMvc restDepartamentosMockMvc;
 
     private Departamentos departamentos;
-
-    @BeforeEach
-    public void setup() {
-        MockitoAnnotations.initMocks(this);
-        final DepartamentosResource departamentosResource = new DepartamentosResource(departamentosRepository, mockDepartamentosSearchRepository);
-        this.restDepartamentosMockMvc = MockMvcBuilders.standaloneSetup(departamentosResource)
-            .setCustomArgumentResolvers(pageableArgumentResolver)
-            .setControllerAdvice(exceptionTranslator)
-            .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter)
-            .setValidator(validator).build();
-    }
 
     /**
      * Create an entity for this test.
@@ -117,7 +94,7 @@ public class DepartamentosResourceIT {
 
         // Create the Departamentos
         restDepartamentosMockMvc.perform(post("/api/departamentos")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(departamentos)))
             .andExpect(status().isCreated());
 
@@ -141,7 +118,7 @@ public class DepartamentosResourceIT {
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restDepartamentosMockMvc.perform(post("/api/departamentos")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(departamentos)))
             .andExpect(status().isBadRequest());
 
@@ -164,7 +141,7 @@ public class DepartamentosResourceIT {
         // Create the Departamentos, which fails.
 
         restDepartamentosMockMvc.perform(post("/api/departamentos")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(departamentos)))
             .andExpect(status().isBadRequest());
 
@@ -181,7 +158,7 @@ public class DepartamentosResourceIT {
         // Get all the departamentosList
         restDepartamentosMockMvc.perform(get("/api/departamentos?sort=id,desc"))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(departamentos.getId().intValue())))
             .andExpect(jsonPath("$.[*].nome").value(hasItem(DEFAULT_NOME)));
     }
@@ -195,7 +172,7 @@ public class DepartamentosResourceIT {
         // Get the departamentos
         restDepartamentosMockMvc.perform(get("/api/departamentos/{id}", departamentos.getId()))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(departamentos.getId().intValue()))
             .andExpect(jsonPath("$.nome").value(DEFAULT_NOME));
     }
@@ -224,7 +201,7 @@ public class DepartamentosResourceIT {
             .nome(UPDATED_NOME);
 
         restDepartamentosMockMvc.perform(put("/api/departamentos")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(updatedDepartamentos)))
             .andExpect(status().isOk());
 
@@ -247,7 +224,7 @@ public class DepartamentosResourceIT {
 
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restDepartamentosMockMvc.perform(put("/api/departamentos")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(departamentos)))
             .andExpect(status().isBadRequest());
 
@@ -269,7 +246,7 @@ public class DepartamentosResourceIT {
 
         // Delete the departamentos
         restDepartamentosMockMvc.perform(delete("/api/departamentos/{id}", departamentos.getId())
-            .accept(TestUtil.APPLICATION_JSON_UTF8))
+            .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNoContent());
 
         // Validate the database contains one less item
@@ -290,7 +267,7 @@ public class DepartamentosResourceIT {
         // Search the departamentos
         restDepartamentosMockMvc.perform(get("/api/_search/departamentos?query=id:" + departamentos.getId()))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(departamentos.getId().intValue())))
             .andExpect(jsonPath("$.[*].nome").value(hasItem(DEFAULT_NOME)));
     }
