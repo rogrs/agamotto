@@ -1,8 +1,0 @@
-export const enum TipoOperacao {
-  INCLUSAO = 'INCLUSAO',
-  ALTERACAO = 'ALTERACAO',
-  MARCACAO_PONTO = 'MARCACAO_PONTO',
-  CNPJ = 'CNPJ',
-  CPF = 'CPF',
-  SEM_DEFINICAO = 'SEM_DEFINICAO'
-}
