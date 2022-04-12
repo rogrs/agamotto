@@ -15,6 +15,7 @@
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>11</java.version>
+		<jasperreports.version>6.19.1</jasperreports.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -74,14 +75,31 @@
 		<dependency>
 			<groupId>net.sf.jasperreports</groupId>
 			<artifactId>jasperreports</artifactId>
-			<version>6.19.1</version>
+			<version>${jasperreports.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>commons-logging</artifactId>
+					<groupId>commons-logging</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>com.lowagie</groupId>
+			<artifactId>itext</artifactId>
+			<version>2.0.7</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-envers</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>com.itextpdf</groupId>
+			<artifactId>itext-pdfa</artifactId>
+			<version>5.5.13.3</version>
+		</dependency>
 
 	</dependencies>
+	
 
 	<build>
 		<plugins>
@@ -117,5 +135,6 @@
 			</plugin>
 		</plugins>
 	</build>
+
 
 </project>
